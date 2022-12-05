@@ -16,6 +16,7 @@ namespace MyGame.Animation
         private List<AnimationFrame> frames;
 
         private int counter;
+        private double secondCounter=0;
 
         public Animation()
         {
@@ -29,10 +30,18 @@ namespace MyGame.Animation
 
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             CurrentFrame = frames[counter];
-            counter++;
+
+            secondCounter += gameTime.ElapsedGameTime.TotalSeconds;
+            int fps = 15;
+
+            if(secondCounter>= 1d / fps)
+            {
+                counter++;
+                secondCounter = 0;
+            }
 
             if (counter >= frames.Count)
             {

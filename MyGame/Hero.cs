@@ -20,23 +20,32 @@ namespace MyGame
         private Vector2 origin = Vector2.Zero;
         private float rotation = 0;
         private float layerDepth = 0;
-        //private Rectangle _partRectangle;
-        //private int moveAside_X = 0;
+        private double secondCounter = 0;
+
+        //private Vector2 positie;
         public Hero(Texture2D texture)
         {
             heroTexture = texture;
             animation = new Animation.Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 13, 1);
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            animation.Update();
+            animation.Update(gameTime);
         }
 
         public void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, new Vector2(20, 20), animation.CurrentFrame.SourceRactangle, Color.White, rotation, origin, scale, SpriteEffects.None, layerDepth);
+            spriteBatch.Draw(heroTexture, new Vector2(0, 0), animation.CurrentFrame.SourceRactangle, Color.White, rotation, origin, scale, SpriteEffects.None, layerDepth);
+        
+            //positie = new Vector2(0,0);
+
+            //spriteBatch.Draw(heroTexture, positie, animation.CurrentFrame.SourceRactangle, Color.White, rotation, origin, scale, SpriteEffects.None, layerDepth);
         }
+
+        //private void Move()
+        //{
+        //}
         
     }
 }
