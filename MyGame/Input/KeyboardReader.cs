@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MyGame.Input
 {
-    internal class KeyboardReader : IInputReader
+    internal class KeyboardReader : IInputReader, IMovable
     {
         private KeyboardState state;
 
@@ -33,18 +33,17 @@ namespace MyGame.Input
 
 
         //mirror sprite
+        SpriteEffects effect = SpriteEffects.FlipHorizontally;
         public SpriteEffects ChooseEffect()
         {
 
-            SpriteEffects effect = SpriteEffects.None;
-
             if (state.IsKeyDown(Keys.Left))
             {
-                effect = SpriteEffects.FlipHorizontally;
+                effect = SpriteEffects.None;
             }
             if (state.IsKeyDown(Keys.Right))
             {
-                effect = SpriteEffects.None;
+                effect = SpriteEffects.FlipHorizontally;
             }
 
             return effect;

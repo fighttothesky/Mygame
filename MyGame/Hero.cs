@@ -35,7 +35,7 @@ namespace MyGame
 
         //for mirror sprite
         private IInputReader mir;
-        private SpriteEffects effects = SpriteEffects.None;
+        private SpriteEffects effects;
 
         public Hero(Texture2D texture, IInputReader inputReader)
         {
@@ -47,7 +47,7 @@ namespace MyGame
 
 
             animation = new Animation.Animation();
-            animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 13, 1);
+            animation.GetFramesFromTextureProperties(texture.Width, texture.Height, 12, 1);
         }
         public void Update(GameTime gameTime)
         {
