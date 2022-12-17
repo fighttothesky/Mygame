@@ -4,8 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using MyGame.Input;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
-using MyGame.Character;
-using MyGame.Content.interfaces;
+using MyGame.Characters;
+using MyGame.interfaces;
+using MyGame.Terrain;
 
 namespace MyGame
 {
@@ -13,6 +14,7 @@ namespace MyGame
     {
         private SpriteBatch spriteBatch;
         private List<IGameObject> gameObjects;
+        private List<IPhysicsObject> physicsObjects;
 
         public Game1()
         {
@@ -32,10 +34,24 @@ namespace MyGame
 
         private void InitializeGameObjects(ContentManager contentManager)
         {
-            gameObjects = new List<IGameObject>
+            Hero hero = new Hero(contentManager, new KeyboardReader());
+            
+            Cube cube1 = new Cube(contentManager);
+            cube1.Sprite.Position = new Vector2(200, 100);
+            
+            Cube cube2 = new Cube(contentManager);
+            cube2.Sprite.Position = new Vector2(0, 400);
+            cube2.Sprite.Scale = new Vector2(4, 4);
+
+            physicsObjects = new List<IPhysicsObject>
             {
-                new Hero(contentManager, new KeyboardReader()),
+                hero,
+                cube1,
+                cube2
             };
+
+            gameObjects = new List<IGameObject>();
+            gameObjects.AddRange(physicsObjects);
         }
 
         protected override void Update(GameTime gameTime)
@@ -46,6 +62,7 @@ namespace MyGame
             }
 
             gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
+            physicsObjects.ForEach(physicsObject1 => physicsObjects.ForEach(physicsObject2 => physicsObject1.CollidesWith(physicsObject2)));
             base.Update(gameTime);
         }
 

@@ -1,4 +1,4 @@
-namespace MyGame.Enum;
+namespace MyGame.Enums;
 
 public enum Direction
 {

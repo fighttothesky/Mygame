@@ -1,33 +1,22 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MyGame.Content.interfaces;
 
-namespace MyGame.Animation
+namespace MyGame.Sprites
 {
-    public class SpriteAnimation : IGameObject
+    public class SpriteAnimation : Sprite
     {
-        // Location
-        public Vector2 Scale { get; set; }
-        public Vector2 Origin { get; set; }
-        public Vector2 Position { get; set; } 
-        public float Rotation { get; set; }
-
-        public Rectangle CurrentFrame { get; set; }
+        private Rectangle currentFrame;
+        
         private readonly List<Rectangle> frames;
         private int rowCounter;
         private double secondRowCounter;
         private readonly double fps;
 
-        private SpriteEffects effects;
-        private readonly Texture2D texture;
-
-        public SpriteAnimation(Texture2D texture, int numberOfWidthSprites, int numberOfHeightSprites, double fps = 24)
+        public SpriteAnimation(Texture2D texture, int numberOfWidthSprites, int numberOfHeightSprites, double fps = 24) : base(texture)
         {
             this.fps = fps;
             frames = new List<Rectangle>();
-            effects = SpriteEffects.None;
-            this.texture = texture;
 
             GetFramesFromTextureProperties(numberOfWidthSprites, numberOfHeightSprites);
         }
@@ -35,21 +24,23 @@ namespace MyGame.Animation
         // Convert image to List of AnimationFrame
         private void GetFramesFromTextureProperties(int numberOfWidthSprites, int numberOfHeightSprites)
         {
-            int widthOfFrame = texture.Width / numberOfWidthSprites;
-            int heightOfFrame = texture.Height / numberOfHeightSprites;
+            int widthOfFrame = Texture.Width / numberOfWidthSprites;
+            int heightOfFrame = Texture.Height / numberOfHeightSprites;
 
-            for (int y = 0; y <= texture.Height - heightOfFrame; y+= heightOfFrame)
+            for (int y = 0; y <= Texture.Height - heightOfFrame; y+= heightOfFrame)
             {
-                for (int x = 0; x <= texture.Width - widthOfFrame; x+= widthOfFrame)
+                for (int x = 0; x <= Texture.Width - widthOfFrame; x+= widthOfFrame)
                 {
                     frames.Add(new Rectangle(x,y,widthOfFrame,heightOfFrame));
                 }
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
-            CurrentFrame = frames[rowCounter];
+            base.Update(gameTime);
+            
+            currentFrame = frames[rowCounter];
 
             secondRowCounter += gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -65,10 +56,10 @@ namespace MyGame.Animation
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        // Get the bounding rectangle of a part of the texture corresponding to the current frame in the animation
+        protected override Rectangle GetFrame()
         {
-            spriteBatch.Draw(texture, Position, CurrentFrame, Color.White, Rotation,
-                Origin, Scale, effects, 0);
+            return currentFrame;
         }
 
         public void Flip()

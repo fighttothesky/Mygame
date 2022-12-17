@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
-using MyGame.Enum;
+using MyGame.Enums;
 using MyGame.interfaces;
 
-namespace MyGame.Animation;
+namespace MyGame.Sprites;
 
 public class AnimationMover : IMovable
 {

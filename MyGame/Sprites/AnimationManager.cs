@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MyGame.Content.interfaces;
+using MyGame.interfaces;
 
-namespace MyGame.Animation;
+namespace MyGame.Sprites;
 
 public class AnimationManager : IGameObject
 {

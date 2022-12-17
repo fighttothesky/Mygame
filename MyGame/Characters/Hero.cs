@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MyGame.Animation;
-using MyGame.Content.interfaces;
-using MyGame.Enum;
+using MyGame.Collisions;
+using MyGame.Enums;
 using MyGame.interfaces;
+using MyGame.Sprites;
 
-namespace MyGame.Character
+namespace MyGame.Characters
 {
-    internal class Hero : IGameObject
+    internal class Hero : IDynamicPhysicsObject
     {
         private IInputReader inputReader;
         private AnimationMover character;
@@ -60,6 +60,29 @@ namespace MyGame.Character
         public void Draw(SpriteBatch spriteBatch)
         {
             animationManager.Draw(spriteBatch);
+        }
+
+        public Sprite GetSprite()
+        {
+            return animationManager.CurrentAnimation;
+        }
+
+        public bool CollidesWith(IPhysicsObject other)
+        {
+            if (this == other) return false;
+            
+            bool collides = PixelCollision.IsColliding(this, other);
+            return collides;
+        }
+
+        public void ApplyGravity(AnimationManager animationManager)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Rectangle GetBoundingRectangle()
+        {
+            return animationManager.CurrentAnimation.GetBoundingRectangle();
         }
     }
 }

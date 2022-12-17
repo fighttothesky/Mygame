@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using MyGame.Enums;
 using MyGame.interfaces;
-using MyGame.Enum;
 
 namespace MyGame.Input
 {

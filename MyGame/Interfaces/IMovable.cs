@@ -1,4 +1,4 @@
-﻿using MyGame.Enum;
+﻿using MyGame.Enums;
 
 namespace MyGame.interfaces
 {
