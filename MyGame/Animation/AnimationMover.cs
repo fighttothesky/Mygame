@@ -1,23 +1,26 @@
 using Microsoft.Xna.Framework;
-using MyGame.Animation;
 using MyGame.Enum;
+using MyGame.interfaces;
 
-namespace MyGame.Character;
+namespace MyGame.Animation;
 
-public class CharacterBase
+public class AnimationMover : IMovable
 {
-    public float Speed { get; set; }
-
+    private readonly AnimationManager animationManager;
     private Direction currentDirection;
 
-    public CharacterBase(Direction currentDirection = Direction.NONE, float speed = 0)
+    public float Speed { get; set; }
+
+    public AnimationMover(AnimationManager animationManager, Direction currentDirection = Direction.NONE, float speed = 0)
     {
+        this.animationManager = animationManager;
         this.currentDirection = currentDirection;
         Speed = speed;
     }
 
-    public void Move(Direction newDirection, AnimationManager animationManager)
+    public void Move(Direction newDirection)
     {
+        // This is for Stop to handle
         if (newDirection == Direction.NONE) return;
         
         // Face direction
@@ -37,11 +40,6 @@ public class CharacterBase
         movement *= Speed;
         
         // Move in direction
-        animationManager.Position += movement;
-    }
-
-    public void Stop()
-    {
-        currentDirection = Direction.NONE;
+        animationManager.SetPosition(animationManager.Position + movement);
     }
 }

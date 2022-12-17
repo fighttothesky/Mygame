@@ -5,15 +5,13 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using MyGame.Enum;
 
 namespace MyGame.interfaces
 {
     internal interface IInputReader
     {
-        Vector2 ReadInput();
-
-
-        //mirror sprite
-        SpriteEffects ChooseEffect();
+        Direction ReadDirectionInput();
+        
     }
 }

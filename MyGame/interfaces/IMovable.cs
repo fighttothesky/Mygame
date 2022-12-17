@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyGame.Enum;
 
 namespace MyGame.interfaces
 {
     internal interface IMovable
     {
-
+        void Move(Direction newDirection);
     }
 }
