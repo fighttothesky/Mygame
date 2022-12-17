@@ -2,17 +2,16 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Animation;
-using MyGame.Character;
 using MyGame.Content.interfaces;
 using MyGame.Enum;
 using MyGame.interfaces;
 
-namespace MyGame
+namespace MyGame.Character
 {
     internal class Hero : IGameObject
     {
         private IInputReader inputReader;
-        private CharacterBase character;
+        private AnimationMover character;
 
         private AnimationManager animationManager;
         private SpriteAnimation idleAnimation;
@@ -22,7 +21,7 @@ namespace MyGame
         {
             CreateAnimations(contentManager);
             animationManager = new AnimationManager(idleAnimation, Vector2.One);
-            character = new CharacterBase();
+            character = new AnimationMover(animationManager);
             character.Speed = 4;
             
             this.inputReader = inputReader;
@@ -31,7 +30,7 @@ namespace MyGame
         private void CreateAnimations(ContentManager contentManager)
         {
             Texture2D radishIdle = contentManager.Load<Texture2D>("Radish_Idle");
-            idleAnimation = new SpriteAnimation(radishIdle, 12, 1);
+            idleAnimation = new SpriteAnimation(radishIdle, 6, 1, 12);
             idleAnimation.Position = new Vector2(1, 1);
             idleAnimation.Scale = new Vector2(4, 4);
             
@@ -47,13 +46,12 @@ namespace MyGame
 
             if (direction == Direction.NONE)
             {
-                character.Stop();
-                animationManager.CurrentAnimation = idleAnimation;
+                animationManager.SetCurrentAnimation(idleAnimation);
             }
             else
             {
-                character.Move(direction, animationManager);
-                animationManager.CurrentAnimation = walkAnimation;
+                character.Move(direction);
+                animationManager.SetCurrentAnimation(walkAnimation);
             }
             
             animationManager.Update(gameTime);

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MyGame.Input;
 using System;
+using Microsoft.Xna.Framework.Content;
+using MyGame.Character;
 
 namespace MyGame
 {
@@ -10,10 +12,8 @@ namespace MyGame
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
-        private Texture2D texture;
         Hero hero;
-
-
+        
         public Game1()
         {  
             _graphics = new GraphicsDeviceManager(this);
@@ -22,24 +22,17 @@ namespace MyGame
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
         }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
-
+        
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            // TODO: use this.Content to load your game content here
-            texture = Content.Load<Texture2D>("Radish_Run");
-
-            InitializeGameObjects();
+            
+            InitializeGameObjects(Content);
         }
 
-        private void InitializeGameObjects()
+        private void InitializeGameObjects(ContentManager contentManager)
         {
-            hero = new Hero(texture,new KeyboardReader());
+            hero = new Hero(contentManager, new KeyboardReader());
         }
 
         protected override void Update(GameTime gameTime)
