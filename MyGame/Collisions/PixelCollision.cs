@@ -7,8 +7,10 @@ namespace MyGame.Collisions;
 
 public static class PixelCollision
 {
-    public static bool IsColliding(IPhysicsObject physicsObjectA, IPhysicsObject physicsObjectB)
+    public static bool IsColliding(IPhysicsObject physicsObjectA, IPhysicsObject physicsObjectB, out Collision collision)
     {
+        collision = null;
+        
         Sprite a = physicsObjectA.GetSprite();
         Sprite b = physicsObjectB.GetSprite();
         
@@ -28,6 +30,7 @@ public static class PixelCollision
         {
             if (pixelsA[i].A != 0 && pixelsB[i].A != 0)
             {
+                collision = new Collision(physicsObjectA, physicsObjectB, intersection);
                 return true;
             }
         }
@@ -35,7 +38,7 @@ public static class PixelCollision
         return false;
     }
 
-    public static Color[] GetLocalIntersectionPixels(Sprite sprite, Rectangle globalIntersection, Vector2 scale)
+    private static Color[] GetLocalIntersectionPixels(Sprite sprite, Rectangle globalIntersection, Vector2 scale)
     {
         Rectangle localIntersection = new Rectangle(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
         localIntersection.Location /= scale.ToPoint();

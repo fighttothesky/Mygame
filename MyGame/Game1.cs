@@ -5,6 +5,7 @@ using MyGame.Input;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Content;
 using MyGame.Characters;
+using MyGame.Collisions;
 using MyGame.interfaces;
 using MyGame.Terrain;
 
@@ -15,6 +16,7 @@ namespace MyGame
         private SpriteBatch spriteBatch;
         private List<IGameObject> gameObjects;
         private List<IPhysicsObject> physicsObjects;
+        private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
 
         public Game1()
         {
@@ -35,6 +37,11 @@ namespace MyGame
         private void InitializeGameObjects(ContentManager contentManager)
         {
             Hero hero = new Hero(contentManager, new KeyboardReader());
+
+            dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
+            {
+                hero
+            };
             
             Cube cube1 = new Cube(contentManager);
             cube1.Sprite.Position = new Vector2(200, 100);
@@ -45,10 +52,10 @@ namespace MyGame
 
             physicsObjects = new List<IPhysicsObject>
             {
-                hero,
                 cube1,
                 cube2
             };
+            physicsObjects.AddRange(dynamicPhysicsObjects);
 
             gameObjects = new List<IGameObject>();
             gameObjects.AddRange(physicsObjects);
@@ -61,9 +68,33 @@ namespace MyGame
                 Exit();
             }
 
+            Physics();
+            
             gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
-            physicsObjects.ForEach(physicsObject1 => physicsObjects.ForEach(physicsObject2 => physicsObject1.CollidesWith(physicsObject2)));
             base.Update(gameTime);
+        }
+
+        private void Physics()
+        {
+            foreach (IDynamicPhysicsObject dynamicPhysicsObject in dynamicPhysicsObjects)
+            {
+                List<Collision> collisions = new List<Collision>();
+
+                foreach (IPhysicsObject other in physicsObjects)
+                {
+                    if (dynamicPhysicsObject == other)
+                    {
+                        continue;
+                    }
+                    if (PixelCollision.IsColliding(dynamicPhysicsObject, other, out Collision collision))
+                    {
+                        collisions.Add(collision);
+                    }
+                }
+                
+                dynamicPhysicsObject.HandleCollisions(collisions);
+                dynamicPhysicsObject.ApplyGravity();
+            }
         }
 
         protected override void Draw(GameTime gameTime)

@@ -30,7 +30,7 @@ public class Sprite : IGameObject
         spriteBatch.Draw(Texture, Position, GetFrame(), Color.White, Rotation, Origin, Scale, effects, 0);
         
         // For debugging
-        MonoGame.Extended.ShapeExtensions.DrawRectangle(spriteBatch, GetBoundingRectangle(), Color.Red);
+        // MonoGame.Extended.ShapeExtensions.DrawRectangle(spriteBatch, GetBoundingRectangle(), Color.Red);
     }
 
     // Get the bounding rectangle of the texture (no scaling applied)

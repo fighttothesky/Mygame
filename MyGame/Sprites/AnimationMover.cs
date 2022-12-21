@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using MyGame.Enums;
-using MyGame.interfaces;
+using IMovable = MyGame.interfaces.IMovable;
 
 namespace MyGame.Sprites;
 
@@ -41,5 +42,19 @@ public class AnimationMover : IMovable
         
         // Move in direction
         animationManager.SetPosition(animationManager.Position + movement);
+    }
+
+    // This method only moves the sprite in the given direction. It doesn't take rotation or speed into account.
+    public void MoveExact(Vector2 direction)
+    {
+        animationManager.SetPosition(animationManager.Position + direction);
+    }
+    
+    public void Fall()
+    {
+        const float GRAVITY = 9.81f;
+
+        Vector2 velocity = new Vector2(0, 1) * GRAVITY;
+        animationManager.SetPosition(animationManager.Position + velocity);
     }
 }

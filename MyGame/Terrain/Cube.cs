@@ -29,9 +29,4 @@ public class Cube: IPhysicsObject
     {
         return Sprite;
     }
-
-    public bool CollidesWith(IPhysicsObject other)
-    {
-        return GetSprite().GetBoundingRectangle().Intersects(other.GetSprite().GetBoundingRectangle());
-    }
 }

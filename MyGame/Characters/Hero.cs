@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Collisions;
@@ -17,6 +19,8 @@ namespace MyGame.Characters
         private SpriteAnimation idleAnimation;
         private SpriteAnimation walkAnimation;
 
+        private List<Direction> forbiddenDirections;
+
         public Hero(ContentManager contentManager, IInputReader inputReader)
         {
             CreateAnimations(contentManager);
@@ -25,6 +29,7 @@ namespace MyGame.Characters
             character.Speed = 4;
             
             this.inputReader = inputReader;
+            forbiddenDirections = new List<Direction>();
         }
 
         private void CreateAnimations(ContentManager contentManager)
@@ -38,6 +43,40 @@ namespace MyGame.Characters
             walkAnimation = new SpriteAnimation(radishRun, 12, 1);
             walkAnimation.Position = new Vector2(1, 1);
             walkAnimation.Scale = new Vector2(4, 4);
+        }
+        
+        public void HandleCollisions(List<Collision> collisions)
+        {
+            forbiddenDirections = new List<Direction>();
+            
+            foreach (Collision collision in collisions)
+            {
+                forbiddenDirections.AddRange(collision.Directions);
+                
+                // Get collision dimensions
+                int x = collision.CollisionArea.Width;
+                int y = collision.CollisionArea.Height;
+
+                // Axis to move is smallest value (tall = along x, wide = along y)
+                x = x < y ? 1 : 0;
+                y = y > x ? 1 : 0;
+
+                // Invert value depending on which side the collision is on
+                x = collision.Direction.Bottom ? -x : x;
+                y = collision.Direction.Bottom ? -y : y;
+                
+                character.MoveExact(new Vector2(x, y));
+            }
+        }
+        
+        public void ApplyGravity()
+        {
+            // If not colliding with a floor, hero is falling
+            if (!forbiddenDirections.Contains(Direction.DOWN))
+            {
+                animationManager.SetCurrentAnimation(idleAnimation);
+                character.Fall();
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -65,24 +104,6 @@ namespace MyGame.Characters
         public Sprite GetSprite()
         {
             return animationManager.CurrentAnimation;
-        }
-
-        public bool CollidesWith(IPhysicsObject other)
-        {
-            if (this == other) return false;
-            
-            bool collides = PixelCollision.IsColliding(this, other);
-            return collides;
-        }
-
-        public void ApplyGravity(AnimationManager animationManager)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Rectangle GetBoundingRectangle()
-        {
-            return animationManager.CurrentAnimation.GetBoundingRectangle();
         }
     }
 }
