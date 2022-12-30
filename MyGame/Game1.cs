@@ -36,25 +36,36 @@ public class Game1 : Game
 
     private void InitializeGameObjects(ContentManager contentManager)
     {
-        Hero hero = new(contentManager, new KeyboardReader());
+        Hero hero = new Hero(contentManager, new KeyboardReader());
+        hero.animationManager.SetPosition(new Vector2(0, 500));
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
-            hero
+            hero,
         };
 
-        Cube cube1 = new(contentManager);
-        cube1.Sprite.Position = new Vector2(200, 100);
-
-        Cube cube2 = new(contentManager);
-        cube2.Sprite.Position = new Vector2(0, 400);
-        cube2.Sprite.Scale = new Vector2(4, 4);
+        Cube cube1 = new Cube(contentManager);
+        cube1.Sprite.Position = new Vector2(400, 800);
+        
+        Cube cube2 = new Cube(contentManager);
+        cube2.Sprite.Position = new Vector2(800, 900);
 
         physicsObjects = new List<IPhysicsObject>
         {
             cube1,
-            cube2
+            cube2,
         };
+        
+        int left = -100;
+        int top = 1000;
+        for (int i = 0; i < 10; i++)
+        {
+            Cube cube = new Cube(contentManager);
+            cube.Sprite.Position = new Vector2(left + i * 250, top);
+            cube.Sprite.Scale = new Vector2(4, 4);
+            physicsObjects.Add(cube);
+        }
+        
         physicsObjects.AddRange(dynamicPhysicsObjects);
 
         gameObjects = new List<IGameObject>();

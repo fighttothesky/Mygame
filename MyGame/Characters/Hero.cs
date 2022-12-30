@@ -11,7 +11,7 @@ namespace MyGame.Characters;
 
 internal class Hero : IDynamicPhysicsObject
 {
-    private readonly AnimationManager animationManager;
+    public readonly AnimationManager animationManager;
     private readonly AnimationMover character;
     private readonly IInputReader inputReader;
 
@@ -24,7 +24,7 @@ internal class Hero : IDynamicPhysicsObject
         CreateAnimations(contentManager);
         animationManager = new AnimationManager(idleAnimation, Vector2.One);
         character = new AnimationMover(animationManager);
-        character.Speed = 4;
+        character.Speed = 3;
 
         this.inputReader = inputReader;
         forbiddenDirections = new List<Direction>();
@@ -44,13 +44,9 @@ internal class Hero : IDynamicPhysicsObject
             var y = collision.CollisionArea.Height;
 
             // Axis to move is smallest value (tall = along x, wide = along y)
-            // Value - 1 is value to push out while keeping collision (so won't move further in that direction)
             x = x < y ? x : 0;
             y = y < x ? y : 0;
-
-            // No need to push out
-            if (x == 0 && y == 0) return;
-
+            
             // Invert value depending on which side the collision is on
             x = collision.Direction.Right ? -x : x;
             y = collision.Direction.Bottom ? -y : y;
