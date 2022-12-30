@@ -29,8 +29,8 @@ public class Collision
         Directions = CollisionDirectionsAsList();
 
         Scale = CalculateScale();
-        List<Point> thisPixels = GetFilledPixels(This.GetSprite(), collisionArea, Scale);
-        List<Point> otherPixels = GetFilledPixels(Other.GetSprite(), collisionArea, Scale);
+        List<Point> thisPixels = GetFilledPixels(This.GetSprite(), collisionArea);
+        List<Point> otherPixels = GetFilledPixels(Other.GetSprite(), collisionArea);
         CollidingPixels = thisPixels.FindAll(point => otherPixels.Contains(point));
         CollisionArea = GetPixelCollisionArea();
     }
@@ -58,15 +58,20 @@ public class Collision
         if (Direction.Bottom) directions.Add(Enums.Direction.DOWN);
         return directions;
     }
-
-    private static List<Point> GetFilledPixels(Sprite sprite, Rectangle globalIntersection, Vector2 scale)
+    
+    private Vector2 CalculateScale()
     {
-        Rectangle localIntersection =
-            new(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
-        localIntersection.Location /= scale.ToPoint();
-        localIntersection.Size /= scale.ToPoint();
-        localIntersection.Size =
-            new Point(Math.Max(localIntersection.Size.X, 1), Math.Max(localIntersection.Size.Y, 1));
+        return This.GetSprite().Scale.X * This.GetSprite().Scale.Y > Other.GetSprite().Scale.X * Other.GetSprite().Scale.Y
+            ? This.GetSprite().Scale
+            : Other.GetSprite().Scale;
+    }
+    
+    private List<Point> GetFilledPixels(Sprite sprite, Rectangle globalIntersection)
+    {
+        Rectangle localIntersection = new(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
+        localIntersection.Location /= Scale.ToPoint();
+        localIntersection.Size /= Scale.ToPoint();
+        localIntersection.Size = new Point(Math.Max(localIntersection.Size.X, 1), Math.Max(localIntersection.Size.Y, 1));
 
         var pixelCount = localIntersection.Size.X * localIntersection.Size.Y;
 
@@ -79,20 +84,12 @@ public class Collision
             // Transparent pixels aren't interesting for collisions
             if (flatPixels[i].A == 0) continue;
 
-            var y = (int)Math.Round(i * scale.Y / localIntersection.Size.X);
-            var x = (int)Math.Round(i * scale.X % localIntersection.Size.X);
+            var x = (int) Math.Round(i * Scale.X % localIntersection.Size.X);
+            var y = (int) Math.Round(i * Scale.Y / localIntersection.Size.X);
             collidingPixels.Add(new Point(x, y));
         }
 
         return collidingPixels.Distinct().ToList();
-    }
-
-    private Vector2 CalculateScale()
-    {
-        return This.GetSprite().Scale.X * This.GetSprite().Scale.Y >
-               Other.GetSprite().Scale.X * Other.GetSprite().Scale.Y
-            ? This.GetSprite().Scale
-            : Other.GetSprite().Scale;
     }
 
     public bool HasCollidingPixels()

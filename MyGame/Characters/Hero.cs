@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using MyGame.Collisions;
 using MyGame.Enums;
 using MyGame.interfaces;
@@ -19,6 +20,10 @@ internal class Hero : IDynamicPhysicsObject
     private SpriteAnimation idleAnimation;
     private SpriteAnimation walkAnimation;
 
+    private Rectangle currentCollision;
+    
+    public bool Debug { get; set; } = true;
+
     public Hero(ContentManager contentManager, IInputReader inputReader)
     {
         CreateAnimations(contentManager);
@@ -33,6 +38,7 @@ internal class Hero : IDynamicPhysicsObject
     public void HandleCollisions(List<Collision> collisions)
     {
         forbiddenDirections = new List<Direction>();
+        currentCollision = new Rectangle();
 
         foreach (Collision collision in collisions)
         {
@@ -53,6 +59,8 @@ internal class Hero : IDynamicPhysicsObject
 
             // Push out
             character.MoveExact(new Vector2(x, y));
+
+            currentCollision = collision.CollisionArea;
         }
     }
 
@@ -85,6 +93,9 @@ internal class Hero : IDynamicPhysicsObject
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        // For debugging
+        if (Debug) spriteBatch.DrawRectangle(currentCollision, Color.Red);
+        
         animationManager.Draw(spriteBatch);
     }
 

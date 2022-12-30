@@ -14,7 +14,7 @@ public class Sprite : IGameObject
     public Vector2 Origin { get; set; }
     public Vector2 Position { get; set; }
     public float Rotation { get; set; }
-    public bool Debug { get; set; } = false;
+    public bool Debug { get; set; } = true;
     public Texture2D Texture { get; }
 
     public Sprite(Texture2D texture)
@@ -32,7 +32,7 @@ public class Sprite : IGameObject
         spriteBatch.Draw(Texture, Position, GetFrame(), Color.White, Rotation, Origin, Scale, effects, 0);
 
         // For debugging
-        if (Debug) spriteBatch.DrawRectangle(GetBoundingRectangle(), Color.Red);
+        if (Debug) spriteBatch.DrawRectangle(GetBoundingRectangle(), Color.OrangeRed);
     }
 
     // Get the bounding rectangle of the texture (no scaling applied)

@@ -1,24 +1,20 @@
 using Microsoft.Xna.Framework;
 using MyGame.interfaces;
-using MyGame.Sprites;
 
 namespace MyGame.Collisions;
 
 public static class PixelCollision
 {
-    public static bool IsColliding(IPhysicsObject physicsObjectA, IPhysicsObject physicsObjectB,
-        out Collision collision)
+    public static bool IsColliding(IPhysicsObject objectA, IPhysicsObject objectB, out Collision collision)
     {
         collision = null;
-
-        Sprite a = physicsObjectA.GetSprite();
-        Sprite b = physicsObjectB.GetSprite();
-
-        // No intersection if bounding boxes do not intersect
-        if (!a.GetBoundingRectangle().Intersects(b.GetBoundingRectangle())) return false;
-
-        Rectangle intersection = Rectangle.Intersect(a.GetBoundingRectangle(), b.GetBoundingRectangle());
-        collision = new Collision(physicsObjectA, physicsObjectB, intersection);
+        
+        // No intersection if intersection has a size of 0
+        Rectangle intersection = Rectangle.Intersect(objectA.GetSprite().GetBoundingRectangle(), objectB.GetSprite().GetBoundingRectangle());
+        if (intersection.Size == Point.Zero) return false;
+        
+        // Get pixel collision
+        collision = new Collision(objectA, objectB, intersection);
         return collision.HasCollidingPixels();
     }
 }
