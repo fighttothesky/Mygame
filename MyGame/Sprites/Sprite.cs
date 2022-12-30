@@ -11,6 +11,7 @@ public class Sprite : IGameObject
     public Vector2 Origin { get; set; }
     public Vector2 Position { get; set; } 
     public float Rotation { get; set; }
+    public bool Debug { get; set; } = true;
     
     protected SpriteEffects effects;
     public Texture2D Texture { get; }
@@ -30,7 +31,10 @@ public class Sprite : IGameObject
         spriteBatch.Draw(Texture, Position, GetFrame(), Color.White, Rotation, Origin, Scale, effects, 0);
         
         // For debugging
-        // MonoGame.Extended.ShapeExtensions.DrawRectangle(spriteBatch, GetBoundingRectangle(), Color.Red);
+        if (Debug)
+        {
+            MonoGame.Extended.ShapeExtensions.DrawRectangle(spriteBatch, GetBoundingRectangle(), Color.Red);
+        }
     }
 
     // Get the bounding rectangle of the texture (no scaling applied)

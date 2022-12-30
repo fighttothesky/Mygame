@@ -58,13 +58,18 @@ namespace MyGame.Characters
                 int y = collision.CollisionArea.Height;
 
                 // Axis to move is smallest value (tall = along x, wide = along y)
-                x = x < y ? 1 : 0;
-                y = y > x ? 1 : 0;
+                // Value - 1 is value to push out while keeping collision (so won't move further in that direction)
+                x = x < y ? x - 1 : 0;
+                y = y > x ? y - 1 : 0;
+
+                // No need to push out
+                if (x == 0 && y == 0) return;
 
                 // Invert value depending on which side the collision is on
-                x = collision.Direction.Bottom ? -x : x;
+                x = collision.Direction.Right ? -x : x;
                 y = collision.Direction.Bottom ? -y : y;
                 
+                // Push out of collision
                 character.MoveExact(new Vector2(x, y));
             }
         }
