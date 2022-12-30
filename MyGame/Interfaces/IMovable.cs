@@ -1,9 +1,8 @@
 ﻿using MyGame.Enums;
 
-namespace MyGame.interfaces
+namespace MyGame.interfaces;
+
+internal interface IMovable
 {
-    internal interface IMovable
-    {
-        void Move(Direction newDirection);
-    }
+    void Move(Direction newDirection);
 }

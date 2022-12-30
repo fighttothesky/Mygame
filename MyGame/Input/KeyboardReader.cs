@@ -2,27 +2,20 @@
 using MyGame.Enums;
 using MyGame.interfaces;
 
-namespace MyGame.Input
+namespace MyGame.Input;
+
+internal class KeyboardReader : IInputReader
 {
-    internal class KeyboardReader : IInputReader
+    private KeyboardState state;
+
+    public Direction ReadDirectionInput()
     {
-        private KeyboardState state;
+        state = Keyboard.GetState();
 
-        public Direction ReadDirectionInput()
-        {
-            state = Keyboard.GetState();
-            
-            if (state.IsKeyDown(Keys.Left))
-            {
-                return Direction.LEFT;
-            }
-            
-            if (state.IsKeyDown(Keys.Right))
-            {
-                return Direction.RIGHT;
-            }
+        if (state.IsKeyDown(Keys.Left)) return Direction.LEFT;
 
-            return Direction.NONE;
-        }
+        if (state.IsKeyDown(Keys.Right)) return Direction.RIGHT;
+
+        return Direction.NONE;
     }
 }

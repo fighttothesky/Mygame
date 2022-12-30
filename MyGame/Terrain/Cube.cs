@@ -6,7 +6,7 @@ using MyGame.Sprites;
 
 namespace MyGame.Terrain;
 
-public class Cube: IPhysicsObject
+public class Cube : IPhysicsObject
 {
     public Sprite Sprite { get; }
 
@@ -24,7 +24,7 @@ public class Cube: IPhysicsObject
     {
         Sprite.Draw(spriteBatch);
     }
-    
+
     public Sprite GetSprite()
     {
         return Sprite;

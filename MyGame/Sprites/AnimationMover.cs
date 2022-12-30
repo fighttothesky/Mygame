@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 using MyGame.Enums;
-using IMovable = MyGame.interfaces.IMovable;
+using MyGame.interfaces;
 
 namespace MyGame.Sprites;
 
@@ -12,7 +11,8 @@ public class AnimationMover : IMovable
 
     public float Speed { get; set; }
 
-    public AnimationMover(AnimationManager animationManager, Direction currentDirection = Direction.NONE, float speed = 0)
+    public AnimationMover(AnimationManager animationManager, Direction currentDirection = Direction.NONE,
+        float speed = 0)
     {
         this.animationManager = animationManager;
         this.currentDirection = currentDirection;
@@ -23,23 +23,26 @@ public class AnimationMover : IMovable
     {
         // This is for Stop to handle
         if (newDirection == Direction.NONE) return;
-        
+
         // Face direction
         if (newDirection != Direction.UP && newDirection != Direction.DOWN && newDirection != currentDirection)
-        {
             animationManager.Flip();
-        }
         currentDirection = newDirection;
 
         // Calculate movement
         Vector2 movement = Vector2.Zero;
         switch (newDirection)
         {
-            case Direction.RIGHT: movement = new Vector2(1, 0); break;
-            case Direction.LEFT: movement = new Vector2(-1, 0); break;
+            case Direction.RIGHT:
+                movement = new Vector2(1, 0);
+                break;
+            case Direction.LEFT:
+                movement = new Vector2(-1, 0);
+                break;
         }
+
         movement *= Speed;
-        
+
         // Move in direction
         animationManager.SetPosition(animationManager.Position + movement);
     }
@@ -49,7 +52,7 @@ public class AnimationMover : IMovable
     {
         animationManager.SetPosition(animationManager.Position + direction);
     }
-    
+
     public void Fall()
     {
         const float GRAVITY = 9.81f;
