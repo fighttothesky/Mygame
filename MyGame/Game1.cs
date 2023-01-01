@@ -37,7 +37,7 @@ public class Game1 : Game
     private void InitializeGameObjects(ContentManager contentManager)
     {
         Hero hero = new Hero(contentManager, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(0, 500));
+        hero.animationManager.SetPosition(new Vector2(0, 0));
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
@@ -105,7 +105,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin(SpriteSortMode.BackToFront, null, SamplerState.PointClamp);
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         gameObjects.ForEach(gameObject => gameObject.Draw(spriteBatch));
         spriteBatch.End();
 

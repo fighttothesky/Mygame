@@ -25,11 +25,11 @@ public class SpriteAnimation : Sprite
     // Convert image to List of AnimationFrame
     private void GetFramesFromTextureProperties(int numberOfWidthSprites, int numberOfHeightSprites)
     {
-        var widthOfFrame = Texture.Width / numberOfWidthSprites;
-        var heightOfFrame = Texture.Height / numberOfHeightSprites;
+        int widthOfFrame = Texture.Width / numberOfWidthSprites;
+        int heightOfFrame = Texture.Height / numberOfHeightSprites;
 
-        for (var y = 0; y <= Texture.Height - heightOfFrame; y += heightOfFrame)
-        for (var x = 0; x <= Texture.Width - widthOfFrame; x += widthOfFrame)
+        for (int y = 0; y <= Texture.Height - heightOfFrame; y += heightOfFrame)
+        for (int x = 0; x <= Texture.Width - widthOfFrame; x += widthOfFrame)
             frames.Add(new Rectangle(x, y, widthOfFrame, heightOfFrame));
     }
 

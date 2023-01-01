@@ -14,6 +14,7 @@ public class Collision
     public IPhysicsObject Other { get; }
 
     public Rectangle CollisionArea { get; }
+    public Rectangle IntersectionArea { get; }
     public List<Point> CollidingPixels { get; }
     public Vector2 Scale { get; }
 
@@ -68,25 +69,33 @@ public class Collision
     
     private List<Point> GetFilledPixels(Sprite sprite, Rectangle globalIntersection)
     {
-        Rectangle localIntersection = new(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
-        localIntersection.Location /= Scale.ToPoint();
+        Rectangle localIntersection = new Rectangle(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
         localIntersection.Size /= Scale.ToPoint();
-        localIntersection.Size = new Point(Math.Max(localIntersection.Size.X, 1), Math.Max(localIntersection.Size.Y, 1));
-
+        localIntersection.Size = new Point(
+            Math.Min(localIntersection.Size.X, sprite.Texture.Width),
+            Math.Min(localIntersection.Size.Y, sprite.Texture.Height)
+        );
+        localIntersection.Location /= Scale.ToPoint();
+        localIntersection.Location = new Point(
+            Math.Min(localIntersection.Location.X, sprite.Texture.Width - localIntersection.Width),
+            Math.Min(localIntersection.Location.Y, sprite.Texture.Height - localIntersection.Height)
+        );
+        
         var pixelCount = localIntersection.Size.X * localIntersection.Size.Y;
-
+        if (pixelCount == 0) return new List<Point>();
+        
         Color[] flatPixels = new Color[pixelCount];
         sprite.Texture.GetData(0, localIntersection, flatPixels, 0, pixelCount);
 
-        List<Point> collidingPixels = new();
-        for (var i = 0; i < pixelCount; i++)
+        List<Point> collidingPixels = new List<Point>();
+        for (int i = 0; i < pixelCount; i++)
         {
             // Transparent pixels aren't interesting for collisions
             if (flatPixels[i].A == 0) continue;
 
-            var x = (int) Math.Round(i * Scale.X % localIntersection.Size.X);
-            var y = (int) Math.Round(i * Scale.Y / localIntersection.Size.X);
-            collidingPixels.Add(new Point(x, y));
+            int x = (int)((i % localIntersection.Size.X) * Scale.X);
+            int y = (int)(((int)(i / localIntersection.Size.X)) * Scale.Y);
+            collidingPixels.Add(new Point(x, y) + globalIntersection.Location);
         }
 
         return collidingPixels.Distinct().ToList();
@@ -97,16 +106,16 @@ public class Collision
         return CollidingPixels.Count > 0;
     }
 
-    public Rectangle GetPixelCollisionArea()
+    private Rectangle GetPixelCollisionArea()
     {
         if (!HasCollidingPixels()) return new Rectangle();
 
-        var x = CollidingPixels.Select(point => point.X).Min();
-        var y = CollidingPixels.Select(point => point.Y).Min();
+        int x = CollidingPixels.Select(point => point.X).Min();
+        int y = CollidingPixels.Select(point => point.Y).Min();
         Point position = new(x, y);
 
-        var width = CollidingPixels.Select(point => point.X).Max() - x;
-        var height = CollidingPixels.Select(point => point.Y).Max() - y;
+        int width = CollidingPixels.Select(point => point.X).Max() - x;
+        int height = CollidingPixels.Select(point => point.Y).Max() - y;
         Point size = new(width, height);
 
         return new Rectangle(position, size);

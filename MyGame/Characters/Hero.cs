@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,16 +13,19 @@ namespace MyGame.Characters;
 
 internal class Hero : IDynamicPhysicsObject
 {
+    const int MAX_SINK_HEIGHT = 1;
+
     public readonly AnimationManager animationManager;
     private readonly AnimationMover character;
     private readonly IInputReader inputReader;
+
+    private List<Rectangle> currentCollisions;
+    private List<Rectangle> currentIntersections;
 
     private List<Direction> forbiddenDirections;
     private SpriteAnimation idleAnimation;
     private SpriteAnimation walkAnimation;
 
-    private Rectangle currentCollision;
-    
     public bool Debug { get; set; } = true;
 
     public Hero(ContentManager contentManager, IInputReader inputReader)
@@ -38,34 +42,28 @@ internal class Hero : IDynamicPhysicsObject
     public void HandleCollisions(List<Collision> collisions)
     {
         forbiddenDirections = new List<Direction>();
-        currentCollision = new Rectangle();
+        currentCollisions = collisions.Select(c => c.CollisionArea).ToList();
+        currentIntersections = collisions.Select(c => c.IntersectionArea).ToList();
 
         foreach (Collision collision in collisions)
         {
-            // Prevent further movement in the directions of the collision
-            forbiddenDirections.AddRange(collision.Directions);
-
-            // Get collision dimensions
-            int x = collision.CollisionArea.Width;
-            int y = collision.CollisionArea.Height;
-
-            // Axis to move is smallest value (tall = along x, wide = along y)
-            x = x < collision.CollisionArea.Height ? x : 0;
-            y = y < collision.CollisionArea.Width ? y : 0;
-
-            if (x < 2 && y < 2)
+            if (collision.Direction.Bottom)
             {
-                return;
+                forbiddenDirections.Add(Direction.DOWN);
+            }
+            if (collision.Direction.Top)
+            {
+                forbiddenDirections.Add(Direction.UP);
             }
 
-            // Invert value depending on which side the collision is on
-            x = collision.Direction.Right ? -x : x;
-            y = collision.Direction.Bottom ? -y : y;
-
-            // Push out
-            character.MoveExact(new Vector2(x, y));
-
-            currentCollision = collision.CollisionArea;
+            if (collision.Direction.Left && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
+            {
+                forbiddenDirections.Add(Direction.LEFT);
+            }
+            if (collision.Direction.Right && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
+            {
+                forbiddenDirections.Add(Direction.RIGHT);
+            }
         }
     }
 
@@ -83,7 +81,7 @@ internal class Hero : IDynamicPhysicsObject
     {
         Direction direction = inputReader.ReadDirectionInput();
 
-        if (direction == Direction.NONE)
+        if (direction == Direction.NONE || forbiddenDirections.Contains(direction))
         {
             animationManager.SetCurrentAnimation(idleAnimation);
         }
@@ -98,10 +96,21 @@ internal class Hero : IDynamicPhysicsObject
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        // For debugging
-        if (Debug) spriteBatch.DrawRectangle(currentCollision, Color.Red);
-        
         animationManager.Draw(spriteBatch);
+
+        // For debugging
+        if (Debug)
+        {
+            foreach (Rectangle collision in currentCollisions)
+            {
+                spriteBatch.DrawRectangle(collision, Color.Blue);
+            }
+
+            foreach (Rectangle intersection in currentIntersections)
+            {
+                spriteBatch.DrawRectangle(intersection, Color.LightBlue);
+            }
+        }
     }
 
     public Sprite GetSprite()
