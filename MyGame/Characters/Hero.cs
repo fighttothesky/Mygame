@@ -46,13 +46,18 @@ internal class Hero : IDynamicPhysicsObject
             forbiddenDirections.AddRange(collision.Directions);
 
             // Get collision dimensions
-            var x = collision.CollisionArea.Width;
-            var y = collision.CollisionArea.Height;
+            int x = collision.CollisionArea.Width;
+            int y = collision.CollisionArea.Height;
 
             // Axis to move is smallest value (tall = along x, wide = along y)
-            x = x < y ? x : 0;
-            y = y < x ? y : 0;
-            
+            x = x < collision.CollisionArea.Height ? x : 0;
+            y = y < collision.CollisionArea.Width ? y : 0;
+
+            if (x < 2 && y < 2)
+            {
+                return;
+            }
+
             // Invert value depending on which side the collision is on
             x = collision.Direction.Right ? -x : x;
             y = collision.Direction.Bottom ? -y : y;
