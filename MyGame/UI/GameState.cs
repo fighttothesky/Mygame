@@ -23,7 +23,7 @@ namespace MyGame.UI;
       : base(game, graphicsDevice, contentManager)
     {
         Hero hero = new Hero(contentManager, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(500, 500));
+        hero.animationManager.SetPosition(new Vector2(0, 0));
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
