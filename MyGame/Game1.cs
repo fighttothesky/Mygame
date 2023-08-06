@@ -8,6 +8,7 @@ using MyGame.Collisions;
 using MyGame.Input;
 using MyGame.interfaces;
 using MyGame.Terrain;
+using MyGame.UI;
 
 namespace MyGame;
 
@@ -17,7 +18,17 @@ public class Game1 : Game
     private List<IGameObject> gameObjects;
     private List<IPhysicsObject> physicsObjects;
     private SpriteBatch spriteBatch;
+    //scene
+    private GraphicsDeviceManager graphics;
 
+    private State _currentState;
+
+    private State _nextState;
+
+    public void ChangeState(State state)
+    {
+        _nextState = state;
+    }
     public Game1()
     {
         Content.RootDirectory = "Content";
@@ -31,7 +42,18 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        //menu
+        _currentState = new MenuState(this, GraphicsDevice, Content);
+
+
         InitializeGameObjects(Content);
+    }
+
+    protected override void Initialize()
+    {
+        IsMouseVisible = true;
+
+        base.Initialize();
     }
 
     private void InitializeGameObjects(ContentManager contentManager)
@@ -79,7 +101,19 @@ public class Game1 : Game
 
         Physics();
 
-        gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
+        // Menu
+        if (_nextState != null)
+        {
+            _currentState = _nextState;
+
+            _nextState = null;
+        }
+
+        _currentState.Update(gameTime);
+
+        _currentState.PostUpdate(gameTime);
+
+        //gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
         base.Update(gameTime);
     }
 
@@ -105,10 +139,11 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-        gameObjects.ForEach(gameObject => gameObject.Draw(spriteBatch));
-        spriteBatch.End();
+        //spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+        //gameObjects.ForEach(gameObject => gameObject.Draw(spriteBatch));
+        //spriteBatch.End();
 
+        _currentState.Draw(gameTime, spriteBatch);
         base.Draw(gameTime);
     }
 }
