@@ -85,6 +85,11 @@ internal class Hero : IDynamicPhysicsObject
         {
             animationManager.SetCurrentAnimation(idleAnimation);
         }
+        else if (direction == Direction.UP)
+        {
+            character.Move(direction);
+            animationManager.SetCurrentAnimation(idleAnimation);
+        }
         else
         {
             character.Move(direction);

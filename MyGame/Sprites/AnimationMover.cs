@@ -39,10 +39,12 @@ public class AnimationMover : IMovable
             case Direction.LEFT:
                 movement = new Vector2(-1, 0);
                 break;
+            case Direction.UP:
+                movement = new Vector2(0, -8);
+                break;
         }
 
         movement *= Speed;
-
         // Move in direction
         animationManager.SetPosition(animationManager.Position + movement);
     }
