@@ -13,8 +13,8 @@ public class MenuState : State
 {
         private List<Component> _components;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager content)
-          : base(game, graphicsDevice, content)
+        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+          : base(game, graphicsDevice, contentManager)
         {
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>("Font");
@@ -28,7 +28,7 @@ public class MenuState : State
             newGameButton.Click += NewGameButton_Click;
 
 
-            var quitGameButton = new Button(buttonTexture, buttonFont)
+            Button quitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(300, 300),
                 Text = "Quit Game",
