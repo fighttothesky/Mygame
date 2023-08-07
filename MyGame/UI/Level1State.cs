@@ -7,9 +7,10 @@ using MyGame.Input;
 using MyGame.interfaces;
 using MyGame.Terrain;
 using MyGame.Collisions;
+using System.Linq;
 
 namespace MyGame.UI;
-public class GameState : State
+public class Level1State : State
 {
 
     // TODO: make getter for gameObjects (combo dynamicPhysicsObjects and physicsObjects)
@@ -19,7 +20,7 @@ public class GameState : State
 
     private SpriteFont font;
 
-    public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+    public Level1State(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
       : base(game, graphicsDevice, contentManager)
     {
         font = _content.Load<SpriteFont>("Font");
@@ -101,6 +102,12 @@ public class GameState : State
                     physicsObjects.Remove(coin);
                 }
             }
+        }
+
+        // Show win state if 5 coins are collected in the hero's score
+        if (physicsObjects.OfType<Hero>().First().Score >= 1)
+        {
+            _game.ChangeState(new WinState(_game, _graphicsDevice, _content));
         }
     }
 
