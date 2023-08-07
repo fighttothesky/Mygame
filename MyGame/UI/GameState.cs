@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MyGame.Characters;
 using MyGame.Input;
 using MyGame.interfaces;
@@ -13,15 +9,21 @@ using MyGame.Terrain;
 using MyGame.Collisions;
 
 namespace MyGame.UI;
-  public class GameState : State
+public class GameState : State
 {
-    private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
+
+    // TODO: make getter for gameObjects (combo dynamicPhysicsObjects and physicsObjects)
     private List<IGameObject> gameObjects;
+    private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
     private List<IPhysicsObject> physicsObjects;
+
+    private SpriteFont font;
 
     public GameState(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
       : base(game, graphicsDevice, contentManager)
     {
+        font = _content.Load<SpriteFont>("Font");
+
         Hero hero = new Hero(contentManager, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 0));
 
@@ -36,10 +38,14 @@ namespace MyGame.UI;
         Cube cube2 = new Cube(contentManager);
         cube2.Sprite.Position = new Vector2(800, 900);
 
+        Coin kiwi = new Coin(contentManager);
+        kiwi.animationManager.SetPosition(new Vector2(200, 800));
+
         physicsObjects = new List<IPhysicsObject>
         {
             cube1,
             cube2,
+            kiwi,
         };
 
         int left = -100;
@@ -57,6 +63,8 @@ namespace MyGame.UI;
         gameObjects = new List<IGameObject>();
         gameObjects.AddRange(physicsObjects);
 
+        PostUpdate();
+
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -64,13 +72,36 @@ namespace MyGame.UI;
 
         spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
         gameObjects.ForEach(gameObject => gameObject.Draw(spriteBatch));
+
+        int fontY = 10;
+        int i = 0;
+
+        foreach (var physicsObject in physicsObjects)
+        {
+            if (physicsObject is Hero)
+                spriteBatch.DrawString(font, string.Format("Points: " + ((Hero)physicsObject).Score, ++i, ((Hero)physicsObject)), new Vector2(10, fontY += 20), Color.Black);
+        }
+
         spriteBatch.End();
 
     }
 
-    public override void PostUpdate(GameTime gameTime)
+    public override void PostUpdate()
     {
-
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            // check if game object is a coin
+            if (gameObjects[i] is Coin coin)
+            {
+                // check if coin is removed
+                if (coin.isRemoved)
+                {
+                    // remove coin from game objects
+                    gameObjects.RemoveAt(i--);
+                    physicsObjects.Remove(coin);
+                }
+            }
+        }
     }
 
     public override void Update(GameTime gameTime)
@@ -78,6 +109,7 @@ namespace MyGame.UI;
         Physics();
         foreach (var gameObjects in gameObjects)
             gameObjects.Update(gameTime);
+
     }
 
     private void Physics()

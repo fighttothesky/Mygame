@@ -7,6 +7,7 @@ namespace MyGame.Sprites;
 
 public class Sprite : IGameObject
 {
+
     protected SpriteEffects effects;
 
     // Location

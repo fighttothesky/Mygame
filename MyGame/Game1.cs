@@ -73,7 +73,7 @@ public class Game1 : Game
 
         currentState.Update(gameTime);
 
-        currentState.PostUpdate(gameTime);
+        currentState.PostUpdate();
 
         //gameObjects.ForEach(gameObject => gameObject.Update(gameTime));
         base.Update(gameTime);

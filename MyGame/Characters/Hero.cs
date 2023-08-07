@@ -8,6 +8,7 @@ using MyGame.Collisions;
 using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
+using MyGame.Terrain;
 
 namespace MyGame.Characters;
 
@@ -25,6 +26,8 @@ internal class Hero : IDynamicPhysicsObject
     private List<Direction> forbiddenDirections;
     private SpriteAnimation idleAnimation;
     private SpriteAnimation walkAnimation;
+
+    public int Score = 0;
 
     public bool Debug { get; set; } = true;
 
@@ -47,6 +50,14 @@ internal class Hero : IDynamicPhysicsObject
 
         foreach (Collision collision in collisions)
         {
+
+            // Remove coin is intersecting with the hero
+            if (collision.Other is Coin coin)
+            {
+                Score++;
+                coin.isRemoved = true;
+            }
+
             if (collision.Direction.Bottom)
             {
                 forbiddenDirections.Add(Direction.DOWN);
@@ -95,6 +106,8 @@ internal class Hero : IDynamicPhysicsObject
             character.Move(direction);
             animationManager.SetCurrentAnimation(walkAnimation);
         }
+
+
 
         animationManager.Update(gameTime);
     }

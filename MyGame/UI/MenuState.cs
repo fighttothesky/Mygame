@@ -68,7 +68,7 @@ public class MenuState : State
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
         }
 
-        public override void PostUpdate(GameTime gameTime)
+        public override void PostUpdate()
         {
             // remove sprites if they're not needed
         }
@@ -83,5 +83,5 @@ public class MenuState : State
         {
             _game.Exit();
         }
-    }
+}
 
