@@ -19,16 +19,24 @@ public class MenuState : State
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>("Font");
 
-            var newGameButton = new Button(buttonTexture, buttonFont)
+            var level1Button = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 200),
-                Text = "New Game",
+                Position = new Vector2(300, 100),
+                Text = "Level 1",
             };
 
-            newGameButton.Click += NewGameButton_Click;
+            level1Button.Click += NewGameButton_Click;
+
+            var level2Button = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(300, 200),
+                Text = "Level 2",
+            };
+
+            level2Button.Click += NewGameButton_Click;
 
 
-            Button quitGameButton = new Button(buttonTexture, buttonFont)
+        Button quitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(300, 300),
                 Text = "Quit Game",
@@ -38,7 +46,8 @@ public class MenuState : State
 
             _components = new List<Component>()
               {
-                newGameButton,
+                level1Button,
+                level2Button,
                 quitGameButton,
               };
         }
@@ -53,10 +62,6 @@ public class MenuState : State
             spriteBatch.End();
         }
 
-        private void LoadGameButton_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine("Load Game");
-        }
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
