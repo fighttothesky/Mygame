@@ -8,7 +8,7 @@ public class AnimationMover : IMovable
 {
     private readonly AnimationManager animationManager;
     private Direction currentDirection;
-    private string lookingDirection;
+    private string lookingDirection = "left";
 
     public float Speed { get; set; }
 
@@ -26,8 +26,7 @@ public class AnimationMover : IMovable
         if (newDirection == Direction.NONE) return;
 
         // Face direction
-        if (newDirection != Direction.UP && newDirection != currentDirection && newDirection == Direction.LEFT && lookingDirection == "right" ||
-                               newDirection == Direction.RIGHT && lookingDirection == "left")
+        if (newDirection != Direction.UP && newDirection != currentDirection && newDirection == Direction.LEFT && lookingDirection == "right" || newDirection == Direction.RIGHT && lookingDirection == "left")
             animationManager.Flip();
         currentDirection = newDirection;
 
