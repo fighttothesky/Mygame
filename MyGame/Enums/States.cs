@@ -3,8 +3,8 @@ namespace MyGame.Enums;
 public enum States
 {
     MenuScreen,
-    Paused,
-    Playing,
+    Level1,
+    Level2,
     GameOver,
     GameWon
 }

@@ -19,7 +19,7 @@ public class Game1 : Game
     //private List<IPhysicsObject> physicsObjects;
     private SpriteBatch spriteBatch;
     //scene
-    private GraphicsDeviceManager graphics;
+    //private GraphicsDeviceManager graphics;
 
     private State currentState;
 

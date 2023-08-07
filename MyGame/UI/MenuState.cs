@@ -25,7 +25,7 @@ public class MenuState : State
                 Text = "Level 1",
             };
 
-            level1Button.Click += NewGameButton_Click;
+            level1Button.Click += Level1Button_Click;
 
             var level2Button = new Button(buttonTexture, buttonFont)
             {
@@ -33,7 +33,7 @@ public class MenuState : State
                 Text = "Level 2",
             };
 
-            level2Button.Click += NewGameButton_Click;
+            level2Button.Click += Level2Button_Click;
 
 
         Button quitGameButton = new Button(buttonTexture, buttonFont)
@@ -63,9 +63,14 @@ public class MenuState : State
         }
 
 
-        private void NewGameButton_Click(object sender, EventArgs e)
+        private void Level1Button_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
+            _game.ChangeState(new Level1State(_game, _graphicsDevice, _content));
+        }
+
+        private void Level2Button_Click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new Level2State(_game, _graphicsDevice, _content));
         }
 
         public override void PostUpdate()
