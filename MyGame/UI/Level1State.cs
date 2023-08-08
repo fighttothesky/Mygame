@@ -40,11 +40,11 @@ public class Level1State : State
         cube2.Sprite.Position = new Vector2(800, 900);
 
         Coin kiwi = new Coin(contentManager);
-        kiwi.animationManager.SetPosition(new Vector2(200, 800));
+        kiwi.animationManager.SetPosition(new Vector2(500, 800));
 
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.Position = new Vector2(100, 100);
+        spike1.Sprite.Position = new Vector2(300, 940);
 
         physicsObjects = new List<IPhysicsObject>
         {
@@ -114,6 +114,12 @@ public class Level1State : State
         {
             _game.ChangeState(new WinState(_game, _graphicsDevice, _content));
         }
+
+        // If hero lose is true, change to lose state
+        if (physicsObjects.OfType<Hero>().First().Lose)
+        {
+            _game.ChangeState(new LoseState(_game, _graphicsDevice, _content));
+        }   
     }
 
     public override void Update(GameTime gameTime)

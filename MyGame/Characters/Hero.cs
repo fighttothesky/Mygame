@@ -27,6 +27,9 @@ internal class Hero : IDynamicPhysicsObject
     private SpriteAnimation idleAnimation;
     private SpriteAnimation walkAnimation;
 
+    // lose if hero touches a enemy
+    public bool Lose = false;
+
     public int Score = 0;
 
     public bool Debug { get; set; } = true;
@@ -56,6 +59,11 @@ internal class Hero : IDynamicPhysicsObject
             {
                 Score++;
                 coin.isRemoved = true;
+            }
+
+            if (collision.Other is IEnemy)
+            {
+                Lose = true;
             }
 
             if (collision.Direction.Bottom)
