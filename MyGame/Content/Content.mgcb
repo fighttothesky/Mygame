@@ -152,7 +152,7 @@
 /processorParam:TextureFormat=Color
 /build:Snail_Walk.png
 
-#begin Spike.png
+#begin Spikes.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -162,5 +162,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Spike.png
+/build:Spikes.png
 
