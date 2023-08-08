@@ -14,8 +14,9 @@ public class Sprite : IGameObject
     public Vector2 Scale { get; set; } = Vector2.One;
     public Vector2 Origin { get; set; }
     public Vector2 Position { get; set; }
+    public Vector2 Position2 { get; set; } = new Vector2(0,0);
     public float Rotation { get; set; }
-    public bool Debug { get; set; } = false;
+    public bool Debug { get; set; } = true;
     public Texture2D Texture { get; }
 
     public Sprite(Texture2D texture)
@@ -39,12 +40,17 @@ public class Sprite : IGameObject
     // Get the bounding rectangle of the texture (no scaling applied)
     protected virtual Rectangle GetFrame()
     {
-        return new Rectangle(Position.ToPoint(), new Point(Texture.Width, Texture.Height));
+        return new Rectangle((int)Position2.X, (int)Position2.Y, Texture.Width, Texture.Height);
     }
 
     // Get the bounding rectangle of the texture (scaling applied)
     public Rectangle GetBoundingRectangle()
     {
         return new Rectangle(Position.ToPoint(), GetFrame().Size * Scale.ToPoint());
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        Position = position;
     }
 }

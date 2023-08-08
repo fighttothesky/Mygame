@@ -42,11 +42,16 @@ public class Level1State : State
         Coin kiwi = new Coin(contentManager);
         kiwi.animationManager.SetPosition(new Vector2(200, 800));
 
+        Spike spike1 = new Spike(contentManager);
+        spike1.Sprite.Scale = new Vector2(4, 4);
+        spike1.Sprite.Position = new Vector2(100, 100);
+
         physicsObjects = new List<IPhysicsObject>
         {
             cube1,
             cube2,
             kiwi,
+            spike1,
         };
 
         int left = -100;
