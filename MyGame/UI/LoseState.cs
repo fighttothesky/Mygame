@@ -19,6 +19,14 @@ namespace MyGame.UI
             Texture2D buttonTexture = _content.Load<Texture2D>("button");
             SpriteFont buttonFont = _content.Load<SpriteFont>("Font");
 
+            var backToMenu = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(300, 200),
+                Text = "Back to menu",
+            };
+
+            backToMenu.Click += BackToMenu_Click;
+
             Button quitGameButton = new Button(buttonTexture, buttonFont)
             {
                 Position = new Vector2(300, 300),
@@ -29,6 +37,7 @@ namespace MyGame.UI
 
             _components = new List<Component>()
               {
+                backToMenu,
                 quitGameButton,
               };
         }
@@ -40,7 +49,7 @@ namespace MyGame.UI
             foreach (var component in _components)
                 component.Draw(gameTime, spriteBatch);
             // draw text "VICTORY" on screen
-            spriteBatch.DrawString(_content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.White);
+            spriteBatch.DrawString(_content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
 
 
             spriteBatch.End();
@@ -56,6 +65,10 @@ namespace MyGame.UI
                 component.Update(gameTime);
         }
 
+        private void BackToMenu_Click(object sender, EventArgs e)
+        {
+            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+        }
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
             _game.Exit();
