@@ -45,6 +45,9 @@ public class Level1State : State
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
         spike1.Sprite.Position = new Vector2(300, 940);
+        
+        Enemy1 enemy1 = new Enemy1(contentManager);
+        enemy1.Sprite.Position = new Vector2(1000, 900);
 
         physicsObjects = new List<IPhysicsObject>
         {
@@ -52,6 +55,7 @@ public class Level1State : State
             cube2,
             kiwi,
             spike1,
+            enemy1,
         };
 
         int left = -100;
