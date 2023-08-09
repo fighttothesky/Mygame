@@ -11,14 +11,19 @@ using System.Threading.Tasks;
 
 namespace MyGame.Characters
 {
-    internal class Enemy1 : IPhysicsObject, IEnemy
+    internal class Enemy1 : IPhysicsObject, ISmartEnemy
     {
         public Sprite Sprite { get; }
+
         public readonly AnimationManager animationManager;
 
         private SpriteAnimation idleAnimation;
 
         public bool IsDead = false;
+
+        bool right;
+        float distance;
+        float oldDistance;
 
         public Enemy1(ContentManager contentManager)
         {
@@ -39,7 +44,7 @@ namespace MyGame.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
+            animationManager.Draw(spriteBatch);
         }
 
         private void CreateAnimations(ContentManager contentManager)
@@ -49,5 +54,6 @@ namespace MyGame.Characters
             idleAnimation.Position = new Vector2(1, 1);
             idleAnimation.Scale = new Vector2(4, 4);
         }
+
     }
 }

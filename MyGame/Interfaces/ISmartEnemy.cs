@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyGame.interfaces
-{
-    public interface IEnemy
+namespace MyGame.interfaces;
+    public interface ISmartEnemy : IEnemy
     {
-
     }
-}

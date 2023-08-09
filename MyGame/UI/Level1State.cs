@@ -44,10 +44,10 @@ public class Level1State : State
 
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.Position = new Vector2(300, 940);
+        spike1.Sprite.Position = new Vector2(700, 940);
         
         Enemy1 enemy1 = new Enemy1(contentManager);
-        enemy1.Sprite.Position = new Vector2(1000, 900);
+        enemy1.animationManager.SetPosition(new Vector2(300, 910));
 
         physicsObjects = new List<IPhysicsObject>
         {
@@ -111,6 +111,18 @@ public class Level1State : State
                     physicsObjects.Remove(coin);
                 }
             }
+
+            // check if game object is a Enemy1
+            if (gameObjects[i] is Enemy1 enemy1)
+            {
+                // check if enemy1 is removed
+                if (enemy1.IsDead)
+                {
+                    // remove enemy1 from game objects
+                    gameObjects.RemoveAt(i--);
+                    physicsObjects.Remove(enemy1);
+                }
+            }   
         }
 
         // Show win state if 5 coins are collected in the hero's score

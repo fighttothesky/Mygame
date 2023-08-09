@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MyGame.Terrain;
-public class Spike : IPhysicsObject, IEnemy
+public class Spike : IPhysicsObject, ISmartEnemy
 {
     public Sprite Sprite { get; }
 

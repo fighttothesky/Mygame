@@ -61,7 +61,11 @@ internal class Hero : IDynamicPhysicsObject
                 coin.isRemoved = true;
             }
 
-            if (collision.Other is IEnemy)
+            if (collision.Other is Enemy1 enemy1 && collision.Direction.Bottom)
+            {
+                enemy1.IsDead = true;
+            }
+            else if (collision.Other is IEnemy)
             {
                 Lose = true;
             }
