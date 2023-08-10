@@ -28,9 +28,14 @@ public class Level1State : State
         Hero hero = new Hero(contentManager, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 0));
 
+        Enemy1 enemy1 = new Enemy1(contentManager, 300);
+        enemy1.animationManager.SetPosition(new Vector2(300, 850));
+
+
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
             hero,
+            enemy1,
         };
 
         Cube cube1 = new Cube(contentManager);
@@ -46,8 +51,7 @@ public class Level1State : State
         spike1.Sprite.Scale = new Vector2(4, 4);
         spike1.Sprite.Position = new Vector2(700, 940);
         
-        Enemy1 enemy1 = new Enemy1(contentManager);
-        enemy1.animationManager.SetPosition(new Vector2(300, 910));
+
 
         physicsObjects = new List<IPhysicsObject>
         {
@@ -55,7 +59,7 @@ public class Level1State : State
             cube2,
             kiwi,
             spike1,
-            enemy1,
+
         };
 
         int left = -100;

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.Collisions;
+using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
 using System;
@@ -11,25 +13,69 @@ using System.Threading.Tasks;
 
 namespace MyGame.Characters
 {
-    internal class Enemy1 : IPhysicsObject, ISmartEnemy
+    internal class Enemy1 : IDynamicPhysicsObject, ISmartEnemy
     {
+        // Does this enemy need forbidden directions?
+
+        const int MAX_SINK_HEIGHT = 1;
+
         public Sprite Sprite { get; }
 
         public readonly AnimationManager animationManager;
+        private readonly AnimationMover character;
 
-        private SpriteAnimation idleAnimation;
+        private SpriteAnimation walkAnimation;
+
+        private List<Direction> forbiddenDirections;
 
         public bool IsDead = false;
+
+        Vector2 velocity;
 
         bool right;
         float distance;
         float oldDistance;
 
-        public Enemy1(ContentManager contentManager)
+        Direction direction = Direction.NONE;
+
+        public Enemy1(ContentManager contentManager, float newDistance)
         {
             CreateAnimations(contentManager);
-            animationManager = new AnimationManager(idleAnimation, Vector2.One);
+            animationManager = new AnimationManager(walkAnimation, Vector2.One);
+            character = new AnimationMover(animationManager);
 
+            forbiddenDirections = new List<Direction>();
+
+            distance = newDistance;
+            oldDistance = distance;
+
+            character.Speed = 2;
+        }
+
+        public void HandleCollisions(List<Collision> collisions)
+        {
+            forbiddenDirections = new List<Direction>();
+
+            foreach (Collision collision in collisions)
+            {
+                if (collision.Direction.Bottom)
+                {
+                    forbiddenDirections.Add(Direction.DOWN);
+                }
+                if (collision.Direction.Top)
+                {
+                    forbiddenDirections.Add(Direction.UP);
+                }
+
+                if (collision.Direction.Left && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
+                {
+                    forbiddenDirections.Add(Direction.LEFT);
+                }
+                if (collision.Direction.Right && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
+                {
+                    forbiddenDirections.Add(Direction.RIGHT);
+                }
+            }
         }
 
         public Sprite GetSprite()
@@ -39,6 +85,29 @@ namespace MyGame.Characters
 
         public void Update(GameTime gameTime)
         {
+
+            if (forbiddenDirections.Contains(direction) || distance <= 0)
+            {
+                direction = Direction.RIGHT;
+            }
+            else if (distance >= oldDistance)
+            {
+                direction = Direction.LEFT;
+            }
+
+            if (direction == Direction.RIGHT)
+            {
+                distance += character.Speed;
+            }
+            else if (direction == Direction.LEFT)
+            {
+                distance -= character.Speed;
+            }
+
+            character.Move(direction);
+
+
+
             animationManager.Update(gameTime);
         }
 
@@ -49,11 +118,22 @@ namespace MyGame.Characters
 
         private void CreateAnimations(ContentManager contentManager)
         {
-            Texture2D idelSnail = contentManager.Load<Texture2D>("Snail_Idle");
-            idleAnimation = new SpriteAnimation(idelSnail, 15, 1, 12);
-            idleAnimation.Position = new Vector2(1, 1);
-            idleAnimation.Scale = new Vector2(4, 4);
+            Texture2D walkSnail = contentManager.Load<Texture2D>("Snail_Walk");
+            walkAnimation = new SpriteAnimation(walkSnail, 10, 1, 12);
+            walkAnimation.Position = new Vector2(1, 1);
+            walkAnimation.Scale = new Vector2(4, 4);
         }
 
+
+
+        public void ApplyGravity()
+        {
+            // If not colliding with a floor, enemy is falling
+            if (!forbiddenDirections.Contains(Direction.DOWN))
+            {
+                animationManager.SetCurrentAnimation(walkAnimation);
+                character.Fall();
+            }
+        }
     }
 }
