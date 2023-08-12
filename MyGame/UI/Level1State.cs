@@ -20,13 +20,27 @@ public class Level1State : State
 
     private SpriteFont font;
 
+
+
+    int[,] gameboard = new int[,]
+    {
+            { 1,1,1,1,1,1,1,1 },
+            { 0,0,1,1,0,1,1,1 },
+            { 1,0,0,0,0,0,0,1 },
+            { 1,1,1,1,1,1,0,1 },
+            { 1,0,0,0,0,0,0,2 },
+            { 1,0,1,1,1,1,1,2 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,1,1,1,1,1,1,1 }
+    };
+
     public Level1State(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
       : base(game, graphicsDevice, contentManager)
     {
         font = _content.Load<SpriteFont>("Font");
 
         Hero hero = new Hero(contentManager, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(0, 0));
+        hero.animationManager.SetPosition(new Vector2(0, 800));
 
         Enemy1 enemy1 = new Enemy1(contentManager, 300);
         enemy1.animationManager.SetPosition(new Vector2(300, 850));
@@ -62,6 +76,9 @@ public class Level1State : State
 
         };
 
+
+
+
         int left = -100;
         int top = 1000;
         for (int i = 0; i < 10; i++)
@@ -72,6 +89,22 @@ public class Level1State : State
             physicsObjects.Add(cube);
         }
 
+
+        // test
+        for (int l = 0; l < gameboard.GetLength(0); l++)
+        {
+            for (int c = 0; c < gameboard.GetLength(1); c++)
+            {
+                if (gameboard[l, c] == 1)
+                {
+                    Cube cube = new Cube(contentManager);
+                    cube.Sprite.Position = new Vector2((c * 64), (l * 64));
+                    physicsObjects.Add(cube);
+                }
+            }
+        }
+
+
         physicsObjects.AddRange(dynamicPhysicsObjects);
 
         gameObjects = new List<IGameObject>();
@@ -80,6 +113,7 @@ public class Level1State : State
         PostUpdate();
 
     }
+
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
