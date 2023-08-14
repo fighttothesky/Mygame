@@ -45,7 +45,7 @@ namespace MyGame.Terrain
         {
             Texture2D kiwi = contentManager.Load<Texture2D>("Kiwi");
             idleAnimation = new SpriteAnimation(kiwi, 17, 1, 12);
-            idleAnimation.Position = new Vector2(1, 1);
+            idleAnimation.SpritePosition = new Vector2(1, 1);
             idleAnimation.Scale = new Vector2(4, 4);
         }
     }

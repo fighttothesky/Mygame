@@ -38,10 +38,10 @@ namespace MyGame.UI
         };
 
             Cube cube1 = new Cube(contentManager);
-            cube1.Sprite.Position = new Vector2(400, 800);
+            cube1.Sprite.SpritePosition = new Vector2(400, 800);
 
             Cube cube2 = new Cube(contentManager);
-            cube2.Sprite.Position = new Vector2(800, 900);
+            cube2.Sprite.SpritePosition = new Vector2(800, 900);
 
             Coin kiwi = new Coin(contentManager);
             kiwi.animationManager.SetPosition(new Vector2(200, 800));
@@ -56,7 +56,7 @@ namespace MyGame.UI
             for (int i = 0; i < 10; i++)
             {
                 Cube cube = new Cube(contentManager);
-                cube.Sprite.Position = new Vector2(left + i * 250, top);
+                cube.Sprite.SpritePosition = new Vector2(left + i * 250, top);
                 cube.Sprite.Scale = new Vector2(4, 4);
                 physicsObjects.Add(cube);
             }

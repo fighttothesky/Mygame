@@ -32,12 +32,12 @@ public class AnimationManager : IGameObject
     public void SetPosition(Vector2 position)
     {
         Position = position;
-        CurrentAnimation.Position = position;
+        CurrentAnimation.SpritePosition = position;
     }
 
     public void SetCurrentAnimation(SpriteAnimation newAnimation)
     {
-        newAnimation.Position = Position;
+        newAnimation.SpritePosition = Position;
         newAnimation.SetFlipped(flipped);
 
         CurrentAnimation = newAnimation;

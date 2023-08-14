@@ -152,12 +152,12 @@ internal class Hero : IDynamicPhysicsObject
     {
         Texture2D radishIdle = contentManager.Load<Texture2D>("Radish_Idle2");
         idleAnimation = new SpriteAnimation(radishIdle, 6, 1, 12);
-        idleAnimation.Position = new Vector2(1, 1);
+        idleAnimation.SpritePosition = new Vector2(1, 1);
         idleAnimation.Scale = new Vector2(4, 4);
 
         Texture2D radishRun = contentManager.Load<Texture2D>("Radish_Run2");
         walkAnimation = new SpriteAnimation(radishRun, 12, 1);
-        walkAnimation.Position = new Vector2(1, 1);
+        walkAnimation.SpritePosition = new Vector2(1, 1);
         walkAnimation.Scale = new Vector2(4, 4);
     }
 }

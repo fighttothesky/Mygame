@@ -120,7 +120,7 @@ namespace MyGame.Characters
         {
             Texture2D walkSnail = contentManager.Load<Texture2D>("Snail_Walk");
             walkAnimation = new SpriteAnimation(walkSnail, 10, 1, 12);
-            walkAnimation.Position = new Vector2(1, 1);
+            walkAnimation.SpritePosition = new Vector2(1, 1);
             walkAnimation.Scale = new Vector2(4, 4);
         }
 

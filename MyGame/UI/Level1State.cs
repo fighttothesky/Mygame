@@ -8,6 +8,8 @@ using MyGame.interfaces;
 using MyGame.Terrain;
 using MyGame.Collisions;
 using System.Linq;
+using MyGame.Terrain.Blocks;
+using SharpDX.Direct2D1.Effects;
 
 namespace MyGame.UI;
 public class Level1State : State
@@ -53,18 +55,23 @@ public class Level1State : State
         };
 
         Cube cube1 = new Cube(contentManager);
-        cube1.Sprite.Position = new Vector2(400, 800);
+        cube1.Sprite.SpritePosition = new Vector2(400, 800);
 
         Cube cube2 = new Cube(contentManager);
-        cube2.Sprite.Position = new Vector2(800, 900);
+        cube2.Sprite.SpritePosition = new Vector2(800, 900);
 
         Coin kiwi = new Coin(contentManager);
         kiwi.animationManager.SetPosition(new Vector2(500, 800));
 
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.Position = new Vector2(700, 940);
-        
+        spike1.Sprite.SpritePosition = new Vector2(700, 940);
+
+        BlockSubFrame block1 = new BlockSubFrame(contentManager);
+        block1.Scale = new Vector2(4, 4);
+        block1.SpritePosition = new Vector2(400, 100);
+
+
 
 
         physicsObjects = new List<IPhysicsObject>
@@ -73,7 +80,7 @@ public class Level1State : State
             cube2,
             kiwi,
             spike1,
-
+            //block1,
         };
 
 
@@ -84,22 +91,23 @@ public class Level1State : State
         for (int i = 0; i < 10; i++)
         {
             Cube cube = new Cube(contentManager);
-            cube.Sprite.Position = new Vector2(left + i * 250, top);
+            cube.Sprite.SpritePosition = new Vector2(left + i * 250, top);
             cube.Sprite.Scale = new Vector2(4, 4);
             physicsObjects.Add(cube);
         }
 
 
         // test
-        for (int l = 0; l < gameboard.GetLength(0); l++)
+        for (int l = 1; l < gameboard.GetLength(0); l++)
         {
-            for (int c = 0; c < gameboard.GetLength(1); c++)
+            for (int c = 1; c < gameboard.GetLength(1); c++)
             {
                 if (gameboard[l, c] == 1)
                 {
-                    Cube cube = new Cube(contentManager);
-                    cube.Sprite.Position = new Vector2((c * 64), (l * 64));
-                    physicsObjects.Add(cube);
+                    BlockSubFrame block = new BlockSubFrame(contentManager);
+                    block.SpritePosition = new Vector2(l * 15 * 4, c * 15 * 4);
+                    block.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block);
                 }
             }
         }

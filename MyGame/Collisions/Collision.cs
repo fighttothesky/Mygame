@@ -69,7 +69,7 @@ public class Collision
     
     private List<Point> GetFilledPixels(Sprite sprite, Rectangle globalIntersection)
     {
-        Rectangle localIntersection = new Rectangle(globalIntersection.Location - sprite.Position.ToPoint(), globalIntersection.Size);
+        Rectangle localIntersection = new Rectangle(globalIntersection.Location - sprite.SpritePosition.ToPoint(), globalIntersection.Size);
         localIntersection.Size /= Scale.ToPoint();
         localIntersection.Size = new Point(
             Math.Min(localIntersection.Size.X, sprite.Texture.Width),
