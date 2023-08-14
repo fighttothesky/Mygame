@@ -47,11 +47,15 @@ public class Level1State : State
         Enemy1 enemy1 = new Enemy1(contentManager, 300);
         enemy1.animationManager.SetPosition(new Vector2(300, 850));
 
+        Enemy2 enemy2 = new Enemy2(contentManager, 300);
+        enemy2.animationManager.SetPosition(new Vector2(600, 300));
+
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
             hero,
             enemy1,
+            enemy2,
         };
 
         Cube cube1 = new Cube(contentManager);
@@ -156,14 +160,14 @@ public class Level1State : State
             }
 
             // check if game object is a Enemy1
-            if (gameObjects[i] is Enemy1 enemy1)
+            if (gameObjects[i] is ISmartEnemy smartEnemy)
             {
-                // check if enemy1 is removed
-                if (enemy1.IsDead)
+                // check if smartEnemy is removed
+                if (smartEnemy.IsDead)
                 {
-                    // remove enemy1 from game objects
+                    // remove smartEnemy from game objects
                     gameObjects.RemoveAt(i--);
-                    physicsObjects.Remove(enemy1);
+                    physicsObjects.Remove((IDynamicPhysicsObject)smartEnemy);
                 }
             }   
         }

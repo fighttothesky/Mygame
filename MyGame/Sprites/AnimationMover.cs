@@ -42,6 +42,9 @@ public class AnimationMover : IMovable
                 movement = new Vector2(-1, 0);
                 lookingDirection = "left";
                 break;
+            case Direction.DOWN:
+                movement = new Vector2(0, 6);
+                break;
             case Direction.UP:
                 movement = new Vector2(0, -6);
                 break;
