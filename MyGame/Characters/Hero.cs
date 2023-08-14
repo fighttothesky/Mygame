@@ -138,7 +138,7 @@ internal class Hero : IDynamicPhysicsObject
 
             foreach (Rectangle intersection in currentIntersections)
             {
-                spriteBatch.DrawRectangle(intersection, Color.LightBlue);
+                spriteBatch.DrawRectangle(intersection, Color.Green);
             }
         }
     }

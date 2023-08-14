@@ -26,7 +26,7 @@ public class Level1State : State
 
     int[,] gameboard = new int[,]
     {
-            { 1,1,1,1,1,1,1,1 },
+            { 1,1,1,1,1,1,1,2 },
             { 0,0,1,1,0,1,1,1 },
             { 1,0,0,0,0,0,0,1 },
             { 1,1,1,1,1,1,0,1 },
@@ -67,23 +67,13 @@ public class Level1State : State
         spike1.Sprite.Scale = new Vector2(4, 4);
         spike1.Sprite.SpritePosition = new Vector2(700, 940);
 
-        BlockSubFrame block1 = new BlockSubFrame(contentManager);
-        block1.Scale = new Vector2(4, 4);
-        block1.SpritePosition = new Vector2(400, 100);
-
-
-
-
         physicsObjects = new List<IPhysicsObject>
         {
             cube1,
             cube2,
             kiwi,
             spike1,
-            //block1,
         };
-
-
 
 
         int left = -100;
@@ -98,16 +88,23 @@ public class Level1State : State
 
 
         // test
-        for (int l = 1; l < gameboard.GetLength(0); l++)
+        for (int l = 0; l < gameboard.GetLength(0); l++)
         {
-            for (int c = 1; c < gameboard.GetLength(1); c++)
+            for (int c = 0 ; c < gameboard.GetLength(1); c++)
             {
                 if (gameboard[l, c] == 1)
                 {
                     BlockSubFrame block = new BlockSubFrame(contentManager);
-                    block.SpritePosition = new Vector2(l * 15 * 4, c * 15 * 4);
+                    block.SpritePosition = new Vector2(c * 15 * 4, l * 15 * 4);
                     block.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block);
+                }
+                if (gameboard[l,c] == 2)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.GREY_RIGHT_CORNER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4, l * 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
                 }
             }
         }

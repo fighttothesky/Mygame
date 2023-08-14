@@ -19,10 +19,25 @@ namespace MyGame.Terrain.Blocks
         private const string TEXTURE_NAME = "Terrain";
         public Rectangle Frame { get; private set; }
 
-        public BlockSubFrame(ContentManager contentManager) : base(contentManager, TEXTURE_NAME)
+        public BlockSubFrame(ContentManager contentManager, BlockType block = BlockType.GREY_TOP ) : base(contentManager, TEXTURE_NAME)
         {
+            // Draw different block depending on block type
+            switch (block)
+            {
+                case BlockType.GREY_TOP:
+                    SetTopMiddleStone();
+                    break;
+                case BlockType.GREY_LEFT_CORNER:
+                    SetTopLeftStone();
+                    break;
+                case BlockType.GREY_RIGHT_CORNER:
+                    SetTopRightStone();
+                    break;
+                default:
+                    SetTopMiddleStone();
+                    break;
+            }   
 
-            SetTopMiddleStone();
         }
 
         public void SetTopLeftStone()
