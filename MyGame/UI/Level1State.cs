@@ -23,27 +23,38 @@ public class Level1State : State
     private SpriteFont font;
 
 
-
+    // 1 -> earth top
+    // 2 -> earth middle
+    // 3 -> Stone top left
+    // 4 -> Stone top middle
+    // 5 -> Stone top right
+    // 6 -> Stone middle left
+    // 7 -> Stone middle middle
+    // 8 -> Stone middle right
+    // 9 -> Stone bottom left
+    // 10 -> Stone bottom middle
+    // 11 -> Stone bottom right
     int[,] gameboard = new int[,]
     {
-            { 1,1,1,1,1,1,1,2 },
-            { 0,0,1,1,0,1,1,1 },
-            { 1,0,0,0,0,0,0,1 },
-            { 1,1,1,1,1,1,0,1 },
-            { 1,0,0,0,0,0,0,2 },
-            { 1,0,1,1,1,1,1,2 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,1,1,1,1,1,1,1 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
-            { 1,0,0,0,0,0,0,0 },
+            { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,7,7,10,10,10,10,10,10,10,10,10,10,10,10,10,10,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,10,10,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,2,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,4,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,7,7,4,4,4,4,4,4,4,4,4,5,0,0,0,0,0,1 },
+            { 1,0,0,0,0,0,0,0,0,0,0,0,0,3,4,7,7,7,7,7,7,7,7,7,7,7,7,11,0,0,0,0,0,1 },
+            { 1,0,0,0,0,1,1,0,0,0,0,0,0,6,7,7,7,7,7,10,10,10,10,10,10,10,11,0,0,0,0,0,0,1 },
+            { 1,0,0,0,0,2,2,0,0,0,0,3,4,7,7,7,7,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,1,1,1,1,2,2,0,0,0,0,6,7,7,7,7,7,7,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 },
+            { 1,2,2,2,2,2,2,0,0,3,4,7,7,7,7,7,7,7,8,0,0,0,0,0,0,0,0,0,0,0,3,4,4,1 },
+            { 1,2,2,2,2,2,2,1,1,6,7,7,7,7,7,7,7,7,7,4,4,4,4,4,4,4,4,5,0,0,6,7,7,1 },
+            { 1,2,2,2,2,2,2,2,2,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,4,4,7,7,7,1 },
     };
 
     public Level1State(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
@@ -52,13 +63,13 @@ public class Level1State : State
         font = _content.Load<SpriteFont>("Font");
 
         Hero hero = new Hero(contentManager, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(0, 800));
+        hero.animationManager.SetPosition(new Vector2(0,0));
 
-        Enemy1 enemy1 = new Enemy1(contentManager, 300);
-        enemy1.animationManager.SetPosition(new Vector2(300, 850));
+        Enemy1 enemy1 = new Enemy1(contentManager, 400);
+        enemy1.animationManager.SetPosition(new Vector2(1400, 500));
 
-        Enemy2 enemy2 = new Enemy2(contentManager, 300);
-        enemy2.animationManager.SetPosition(new Vector2(600, 300));
+        Enemy2 enemy2 = new Enemy2(contentManager, 500);
+        enemy2.animationManager.SetPosition(new Vector2(650, 0));
 
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
@@ -68,54 +79,125 @@ public class Level1State : State
             enemy2,
         };
 
-        Cube cube1 = new Cube(contentManager);
-        cube1.Sprite.SpritePosition = new Vector2(400, 800);
-
-        Cube cube2 = new Cube(contentManager);
-        cube2.Sprite.SpritePosition = new Vector2(800, 900);
-
-        Coin kiwi = new Coin(contentManager);
-        kiwi.animationManager.SetPosition(new Vector2(500, 800));
-
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.SpritePosition = new Vector2(700, 940);
+        spike1.Sprite.SpritePosition = new Vector2(420, 900);
+
+        Spike spike2 = new Spike(contentManager);
+        spike2.Sprite.Scale = new Vector2(4, 4);
+        spike2.Sprite.SpritePosition = new Vector2(360, 900);
+
+
+        Spike spike3 = new Spike(contentManager);
+        spike3.Sprite.Scale = new Vector2(4, 4);
+        spike3.Sprite.SpritePosition = new Vector2(1620, 960);
+
+        Spike spike4 = new Spike(contentManager);
+        spike4.Sprite.Scale = new Vector2(4, 4);
+        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
+
+
+
+        // COINS
+        Coin kiwi1 = new Coin(contentManager);
+        kiwi1.animationManager.SetPosition(new Vector2(100, 500));
+
+        Coin kiwi2 = new Coin(contentManager);
+        kiwi2.animationManager.SetPosition(new Vector2(300, 100));
+
+        Coin kiwi3 = new Coin(contentManager);
+        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
 
         physicsObjects = new List<IPhysicsObject>
         {
-            cube1,
-            cube2,
-            kiwi,
             spike1,
+            spike2,
+            spike3,
+            spike4,
+            kiwi1,
+            kiwi2,
+            kiwi3,
         };
 
-
-        int left = -100;
-        int top = 1000;
-        for (int i = 0; i < 10; i++)
-        {
-            Cube cube = new Cube(contentManager);
-            cube.Sprite.SpritePosition = new Vector2(left + i * 250, top);
-            cube.Sprite.Scale = new Vector2(4, 4);
-            physicsObjects.Add(cube);
-        }
-
-
-        // test
+        // Make the gameboard
         for (int l = 0; l < gameboard.GetLength(0); l++)
         {
             for (int c = 0 ; c < gameboard.GetLength(1); c++)
             {
                 if (gameboard[l, c] == 1)
                 {
-                    BlockSubFrame block = new BlockSubFrame(contentManager);
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.EARTH_TOP);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 2)
+                {
+                    BlockSubFrame block = new BlockSubFrame(contentManager, Enums.BlockType.EARTH_CENTER);
                     block.SpritePosition = new Vector2((c * 15 * 4)-15*4, (l * 15 * 4)-15*4);
                     block.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block);
                 }
-                if (gameboard[l,c] == 2)
+                if (gameboard[l,c] == 3)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.GREY_RIGHT_CORNER);
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP_LEFTCORNER);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+
+                if (gameboard[l, c] == 4)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 5)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP_RIGHTCORNER);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 6)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_LEFT);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 7)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_CENTER);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 8)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_RIGHT);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 9)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM_LEFTCORNER);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 10)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    block2.Scale = new Vector2(4, 4);
+                    physicsObjects.Add(block2);
+                }
+                if (gameboard[l, c] == 11)
+                {
+                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM_RIGHTCORNER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
@@ -181,9 +263,8 @@ public class Level1State : State
                 }
             }   
         }
-
-        // Show win state if 5 coins are collected in the hero's score
-        if (physicsObjects.OfType<Hero>().First().Score >= 1)
+        // Show win state if 3 coins are collected in the hero's score
+        if (physicsObjects.OfType<Hero>().First().Score >= 3)
         {
             _game.ChangeState(new WinState(_game, _graphicsDevice, _content));
         }
@@ -192,7 +273,7 @@ public class Level1State : State
         if (physicsObjects.OfType<Hero>().First().Lose)
         {
             _game.ChangeState(new LoseState(_game, _graphicsDevice, _content));
-        }   
+        }  
     }
 
     public override void Update(GameTime gameTime)

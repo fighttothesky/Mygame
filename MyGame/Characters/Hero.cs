@@ -92,6 +92,7 @@ internal class Hero : IDynamicPhysicsObject
 
     public void ApplyGravity()
     {
+
         // If not colliding with a floor, hero is falling
         if (!forbiddenDirections.Contains(Direction.DOWN))
         {
