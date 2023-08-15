@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MyGame.interfaces;
 
-internal interface IDynamicPhysicsObject : IPhysicsObject
+public interface IDynamicPhysicsObject : IPhysicsObject
 {
     void HandleCollisions(List<Collision> collisions);
 }

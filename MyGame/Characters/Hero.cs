@@ -5,6 +5,8 @@ using MonoGame.Extended;
 using MyGame.Collisions;
 using MyGame.Enums;
 using MyGame.interfaces;
+using MyGame.Scenes;
+using MyGame.Scenes.UI;
 using MyGame.Sprites;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,7 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
     private SpriteAnimation walkAnimation;
 
     public int Score { get; private set; } = 0;
+    private Text scoreLabel;
 
     public bool Debug { get; set; } = true;
 
@@ -39,6 +42,8 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
         animationManager = new AnimationManager(idleAnimation, Vector2.One);
         character = new AnimationMover(animationManager);
         character.Speed = 3;
+        SpriteFont font = contentManager.Load<SpriteFont>("Font");
+        scoreLabel = new Text("Points: " + Score, font, new Vector2(10, 30), Color.Black);
 
         this.inputReader = inputReader;
         forbiddenDirections = new List<Direction>();
@@ -110,14 +115,13 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
             animationManager.SetCurrentAnimation(walkAnimation);
         }
 
-
-
         animationManager.Update(gameTime);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         animationManager.Draw(spriteBatch);
+        scoreLabel.Draw(spriteBatch);
 
         // For debugging
         if (Debug)
@@ -141,7 +145,7 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
 
     public void AddScore()
     {
-        Score++;
+        scoreLabel.Content = "Points: " + Score++;
     }
 
     private void CreateAnimations(ContentManager contentManager)

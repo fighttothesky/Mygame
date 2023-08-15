@@ -5,7 +5,7 @@ using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
 
-namespace MyGame.Terrain.Blocks
+namespace MyGame.Terrain
 {
     internal class Block : Sprite, IPhysicsObject
     {

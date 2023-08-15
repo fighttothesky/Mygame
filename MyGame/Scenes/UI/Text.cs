@@ -24,7 +24,7 @@ namespace MyGame.Scenes.UI
             this.colorText = colorText;
         }
 
-        public string Content { get; }
+        public string Content { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
