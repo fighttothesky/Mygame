@@ -62,24 +62,30 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
             if (collision.Direction.Top)
             {
                 forbiddenDirections.Add(Direction.UP);
+                forbiddenDirections.Add(Direction.RIGHT_UP);
+                forbiddenDirections.Add(Direction.LEFT_UP);
             }
+
 
             if (collision.Direction.Left && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
             {
                 forbiddenDirections.Add(Direction.LEFT);
+                forbiddenDirections.Add(Direction.LEFT_UP);
             }
             if (collision.Direction.Right && collision.CollisionArea.Height > MAX_SINK_HEIGHT)
             {
                 forbiddenDirections.Add(Direction.RIGHT);
+                forbiddenDirections.Add(Direction.RIGHT_UP);
             }
         }
     }
 
     public void ApplyGravity()
     {
+        Direction direction = inputReader.ReadDirectionInput();
 
         // If not colliding with a floor, hero is falling
-        if (!forbiddenDirections.Contains(Direction.DOWN))
+        if (!forbiddenDirections.Contains(Direction.DOWN) && direction != Direction.UP && direction != Direction.RIGHT_UP && direction != Direction.LEFT_UP)
         {
             animationManager.SetCurrentAnimation(idleAnimation);
             character.Fall();

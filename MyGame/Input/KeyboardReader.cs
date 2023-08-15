@@ -12,6 +12,10 @@ internal class KeyboardReader : IInputReader
     {
         state = Keyboard.GetState();
 
+        if (state.IsKeyDown(Keys.Up) && state.IsKeyDown(Keys.Left)) return Direction.LEFT_UP;
+
+        if (state.IsKeyDown(Keys.Up) && state.IsKeyDown(Keys.Right)) return Direction.RIGHT_UP;
+
         if (state.IsKeyDown(Keys.Left)) return Direction.LEFT;
 
         if (state.IsKeyDown(Keys.Right)) return Direction.RIGHT;

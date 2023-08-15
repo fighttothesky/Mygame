@@ -91,11 +91,11 @@ namespace MyGame.Characters
 
             if (direction == Direction.UP)
             {
-                distance += 6;
+                distance += 2;
             }
             else if (direction == Direction.DOWN)
             {
-                distance -= 6;
+                distance -= 2;
             }
 
             character.Move(direction);
