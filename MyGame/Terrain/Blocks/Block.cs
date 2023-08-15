@@ -23,7 +23,7 @@ namespace MyGame.Terrain.Blocks
             spriteBatch.Draw(Texture, SpritePosition, GetTextureFrame(), Color.White, Rotation, Origin, Scale, effects, 0);
 
             // For debugging
-            if (Debug) spriteBatch.DrawRectangle(GetBoundingRectangle(), Color.OrangeRed);
+            //if (Debug) spriteBatch.DrawRectangle(GetBoundingRectangle(), Color.OrangeRed);
         }
 
         public Sprite GetSprite()

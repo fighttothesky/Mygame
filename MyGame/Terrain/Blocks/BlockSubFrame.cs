@@ -19,19 +19,44 @@ namespace MyGame.Terrain.Blocks
         private const string TEXTURE_NAME = "Terrain";
         public Rectangle Frame { get; private set; }
 
-        public BlockSubFrame(ContentManager contentManager, BlockType block = BlockType.GREY_TOP ) : base(contentManager, TEXTURE_NAME)
+        public BlockSubFrame(ContentManager contentManager, BlockType block = BlockType.STONE_TOP ) : base(contentManager, TEXTURE_NAME)
         {
             // Draw different block depending on block type
             switch (block)
             {
-                case BlockType.GREY_TOP:
+                case BlockType.STONE_TOP:
                     SetTopMiddleStone();
                     break;
-                case BlockType.GREY_LEFT_CORNER:
+                case BlockType.STONE_TOP_LEFTCORNER:
                     SetTopLeftStone();
                     break;
-                case BlockType.GREY_RIGHT_CORNER:
+                case BlockType.STONE_TOP_RIGHTCORNER:
                     SetTopRightStone();
+                    break;
+                case BlockType.STONE_LEFT:
+                    SetLeftStone();
+                    break;
+                case BlockType.STONE_RIGHT:
+                    SetRightStone();
+                    break;
+                case BlockType.STONE_CENTER:
+                    SetMiddleStone();
+                    break;
+                case BlockType.STONE_BOTTOM_LEFTCORNER:
+                    SetBottomLeftStone();
+                    break;
+                case BlockType.STONE_BOTTOM_RIGHTCORNER:
+                    SetBottomRightStone();
+                    break;
+                case BlockType.STONE_BOTTOM:
+                    SetBottomMiddleStone();
+                    break;
+
+                case BlockType.EARTH_TOP:
+                    SetTopEarth();
+                    break;
+                case BlockType.EARTH_CENTER:
+                    SetMiddleEarth();
                     break;
                 default:
                     SetTopMiddleStone();
@@ -40,6 +65,8 @@ namespace MyGame.Terrain.Blocks
 
         }
 
+
+        // For Stone
         public void SetTopLeftStone()
         {
             Frame = new Rectangle(0, 0, BLOCK_SIZE, BLOCK_SIZE);
@@ -53,6 +80,43 @@ namespace MyGame.Terrain.Blocks
         {
             Frame = new Rectangle(BLOCK_SIZE*2, 0, BLOCK_SIZE, BLOCK_SIZE);
         }
+
+        public void SetLeftStone()
+        {
+            Frame = new Rectangle(0, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        }
+        public void SetMiddleStone()
+        {
+            Frame = new Rectangle(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        }
+        public void SetRightStone()
+        {
+            Frame = new Rectangle(BLOCK_SIZE*2, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+        }
+        public void SetBottomLeftStone()
+        {
+            Frame = new Rectangle(0, BLOCK_SIZE*2, BLOCK_SIZE, BLOCK_SIZE);
+        }
+        public void SetBottomMiddleStone()
+        {
+            Frame = new Rectangle(BLOCK_SIZE, BLOCK_SIZE*2, BLOCK_SIZE, BLOCK_SIZE);
+        }
+        public void SetBottomRightStone()
+        {
+            Frame = new Rectangle(BLOCK_SIZE*2, BLOCK_SIZE*2, BLOCK_SIZE, BLOCK_SIZE);
+        }
+
+        // For earth
+        public void SetTopEarth()
+        {
+            Frame = new Rectangle(BLOCK_SIZE * 7, 0, BLOCK_SIZE, BLOCK_SIZE);
+        }
+
+        public void SetMiddleEarth()
+        {
+            Frame = new Rectangle(BLOCK_SIZE * 7, BLOCK_SIZE*2, BLOCK_SIZE, BLOCK_SIZE);
+        }
+
 
         protected override Rectangle GetTextureFrame()
         {
