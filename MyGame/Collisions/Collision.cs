@@ -44,7 +44,7 @@ public class Collision
         CollisionDirection collisionDirection = new();
         collisionDirection.Left = boundsB.Left < boundsA.Left && boundsA.Left < boundsB.Right;
         collisionDirection.Right = boundsB.Left < boundsA.Right && boundsA.Right < boundsB.Right;
-        collisionDirection.Top = boundsB.Top < boundsA.Top && boundsA.Top < boundsB.Bottom;
+        collisionDirection.Top = boundsA.Top < boundsB.Bottom && boundsB.Bottom < boundsA.Bottom;
         collisionDirection.Bottom = boundsB.Top < boundsA.Bottom && boundsA.Bottom < boundsB.Bottom;
 
         return collisionDirection;

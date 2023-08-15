@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Characters
 {
-    internal class Snail : IDynamicPhysicsObject, ISmartEnemy
+    internal class Snail : IDynamicPhysicsObject, IEnemy, IRemovable, IGravityObject
     {
         // Does this enemy need forbidden directions?
 
@@ -18,7 +18,6 @@ namespace MyGame.Characters
         public Sprite Sprite { get; }
 
         private bool isDead = false;
-        bool ISmartEnemy.IsDead { get => isDead; set => isDead = value; }
 
         public readonly AnimationManager animationManager;
         private readonly AnimationMover character;
@@ -26,7 +25,6 @@ namespace MyGame.Characters
         private SpriteAnimation walkAnimation;
 
         private List<Direction> forbiddenDirections;
-
 
 
         float distance;
@@ -54,6 +52,15 @@ namespace MyGame.Characters
 
             foreach (Collision collision in collisions)
             {
+                if (collision.Other is Hero && collision.Direction.Top)
+                {
+                    Remove();
+                }
+                else if (collision.Other is Hero hero)
+                {
+                    hero.Remove();
+                }
+
                 if (collision.Direction.Bottom)
                 {
                     forbiddenDirections.Add(Direction.DOWN);
@@ -130,6 +137,16 @@ namespace MyGame.Characters
                 animationManager.SetCurrentAnimation(walkAnimation);
                 character.Fall();
             }
+        }
+
+        public bool IsRemoved()
+        {
+            return isDead;
+        }
+
+        public void Remove()
+        {
+            isDead = true;
         }
     }
 }

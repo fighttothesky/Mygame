@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace MyGame.Characters;
 
-internal class Hero : IDynamicPhysicsObject
+internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
 {
     const int MAX_SINK_HEIGHT = 4;
 
@@ -27,12 +27,12 @@ internal class Hero : IDynamicPhysicsObject
     private SpriteAnimation idleAnimation;
     private SpriteAnimation walkAnimation;
 
-    // lose if hero touches a enemy
-    public bool Lose = false;
-
-    public int Score = 0;
+    public int Score { get; private set; } = 0;
 
     public bool Debug { get; set; } = true;
+
+    // lose if hero touches a enemy
+    private bool lose;
 
     public Hero(ContentManager contentManager, IInputReader inputReader)
     {
@@ -53,22 +53,7 @@ internal class Hero : IDynamicPhysicsObject
 
         foreach (Collision collision in collisions)
         {
-
-            // Remove coin is intersecting with the hero
-            if (collision.Other is Coin coin)
-            {
-                Score++;
-                coin.isRemoved = true;
-            }
-
-            if (collision.Other is ISmartEnemy smartEnemy && collision.Direction.Bottom)
-            {
-                smartEnemy.IsDead = true;
-            }
-            else if (collision.Other is IEnemy)
-            {
-                Lose = true;
-            }
+            if (collision.Other is IDynamicPhysicsObject) continue;
 
             if (collision.Direction.Bottom)
             {
@@ -149,6 +134,11 @@ internal class Hero : IDynamicPhysicsObject
         return animationManager.CurrentAnimation;
     }
 
+    public void AddScore()
+    {
+        Score++;
+    }
+
     private void CreateAnimations(ContentManager contentManager)
     {
         Texture2D radishIdle = contentManager.Load<Texture2D>("Radish_Idle2");
@@ -160,5 +150,15 @@ internal class Hero : IDynamicPhysicsObject
         walkAnimation = new SpriteAnimation(radishRun, 12, 1);
         walkAnimation.SpritePosition = new Vector2(1, 1);
         walkAnimation.Scale = new Vector2(4, 4);
+    }
+
+    public bool IsRemoved()
+    {
+        return lose;
+    }
+
+    public void Remove()
+    {
+        lose = true;
     }
 }

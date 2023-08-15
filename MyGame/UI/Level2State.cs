@@ -242,21 +242,21 @@ public class Level2State : State
             if (gameObjects[i] is Coin coin)
             {
                 // check if coin is removed
-                if (coin.isRemoved)
+                if (coin.IsRemoved())
                 {
-                    // remove coin from game objects
+                    // Remove coin from game objects
                     gameObjects.RemoveAt(i--);
                     physicsObjects.Remove(coin);
                 }
             }
 
             // check if game object is a Snail
-            if (gameObjects[i] is ISmartEnemy smartEnemy)
+            if (gameObjects[i] is IRemovable smartEnemy)
             {
                 // check if smartEnemy is removed
-                if (smartEnemy.IsDead)
+                if (smartEnemy.IsRemoved())
                 {
-                    // remove smartEnemy from game objects
+                    // Remove smartEnemy from game objects
                     gameObjects.RemoveAt(i--);
                     physicsObjects.Remove((IDynamicPhysicsObject)smartEnemy);
                 }
@@ -269,7 +269,7 @@ public class Level2State : State
         }
 
         // If hero lose is true, change to lose state
-        if (physicsObjects.OfType<Hero>().First().Lose)
+        if (physicsObjects.OfType<Hero>().First().IsRemoved())
         {
             game.ChangeState(new LoseState(game, graphicsDevice, content));
         }
@@ -297,7 +297,11 @@ public class Level2State : State
             }
 
             dynamicPhysicsObject.HandleCollisions(collisions);
-            dynamicPhysicsObject.ApplyGravity();
+            if (dynamicPhysicsObject is IGravityObject gravityObject)
+            {
+                gravityObject.ApplyGravity();
+
+            }
         }
     }
 }

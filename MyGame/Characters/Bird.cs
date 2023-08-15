@@ -6,17 +6,17 @@ using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
 using System.Collections.Generic;
+using System.Net;
 
 namespace MyGame.Characters
 {
-    internal class Bird : IDynamicPhysicsObject, ISmartEnemy
+    internal class Bird : IDynamicPhysicsObject, IEnemy, IRemovable
     {
         // Does this enemy need forbidden directions?
 
         const int MAX_SINK_HEIGHT = 1;
 
         private bool isDead = false;
-        bool ISmartEnemy.IsDead { get => isDead; set => isDead = value; }
 
         public Sprite Sprite { get; }
 
@@ -26,8 +26,6 @@ namespace MyGame.Characters
         private SpriteAnimation movingAnimation;
 
         private List<Direction> forbiddenDirections;
-
-        public bool IsDead = false;
 
         float distance;
         float oldDistance;
@@ -54,6 +52,15 @@ namespace MyGame.Characters
 
             foreach (Collision collision in collisions)
             {
+                if (collision.Other is Hero && collision.Direction.Top)
+                {
+                    Remove();
+                }
+                else if (collision.Other is Hero hero)
+                {
+                    hero.Remove();
+                }
+
                 if (collision.Direction.Bottom)
                 {
                     forbiddenDirections.Add(Direction.DOWN);
@@ -62,7 +69,6 @@ namespace MyGame.Characters
                 {
                     forbiddenDirections.Add(Direction.UP);
                 }
-
             }
         }
 
@@ -112,11 +118,14 @@ namespace MyGame.Characters
             movingAnimation.Scale = new Vector2(4, 4);
         }
 
-
-
-        public void ApplyGravity()
+        public bool IsRemoved()
         {
-            // Flying enemies don't need gravity
+            return isDead;
+        }
+
+        public void Remove()
+        {
+            isDead = true;
         }
     }
 }

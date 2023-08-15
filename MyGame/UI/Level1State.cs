@@ -17,9 +17,11 @@ public class Level1State : State
     // TODO: make getter for gameObjects (combo dynamicPhysicsObjects and physicsObjects)
     private List<IGameObject> gameObjects;
     private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
-    private List<IPhysicsObject> physicsObjects;
+    private List<IPhysicsObject> physicsObjects = new List<IPhysicsObject>();
 
     private SpriteFont font;
+
+    private Hero hero;
 
 
     // 1 -> earth top
@@ -61,7 +63,7 @@ public class Level1State : State
     {
         font = content.Load<SpriteFont>("Font");
 
-        Hero hero = new Hero(contentManager, new KeyboardReader());
+        hero = new Hero(contentManager, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 0));
 
         Snail enemy1 = new Snail(contentManager, 400);
@@ -70,13 +72,6 @@ public class Level1State : State
         Bird enemy2 = new Bird(contentManager, 500);
         enemy2.animationManager.SetPosition(new Vector2(650, 0));
 
-
-        dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
-        {
-            hero,
-            enemy1,
-            enemy2,
-        };
 
         Spike spike1 = new Spike(contentManager);
         spike1.Sprite.Scale = new Vector2(4, 4);
@@ -95,8 +90,6 @@ public class Level1State : State
         spike4.Sprite.Scale = new Vector2(4, 4);
         spike4.Sprite.SpritePosition = new Vector2(1680, 960);
 
-
-
         // COINS
         Coin kiwi1 = new Coin(contentManager);
         kiwi1.animationManager.SetPosition(new Vector2(100, 500));
@@ -107,8 +100,11 @@ public class Level1State : State
         Coin kiwi3 = new Coin(contentManager);
         kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
 
-        physicsObjects = new List<IPhysicsObject>
+        dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
+            hero,
+            enemy1,
+            enemy2,
             spike1,
             spike2,
             spike3,
@@ -238,40 +234,25 @@ public class Level1State : State
     {
         for (int i = 0; i < gameObjects.Count; i++)
         {
-            // check if game object is a coin
-            if (gameObjects[i] is Coin coin)
+            if (gameObjects[i] is IRemovable removable && removable is not Hero)
             {
-                // check if coin is removed
-                if (coin.isRemoved)
+                if (removable.IsRemoved())
                 {
-                    // remove coin from game objects
+                    // Remove removable from game objects
                     gameObjects.RemoveAt(i--);
-                    physicsObjects.Remove(coin);
-                }
-            }
-
-            // check if game object is a Snail
-            if (gameObjects[i] is ISmartEnemy smartEnemy)
-            {
-                // check if smartEnemy is removed
-                if (smartEnemy.IsDead)
-                {
-                    // remove smartEnemy from game objects
-                    gameObjects.RemoveAt(i--);
-                    physicsObjects.Remove((IDynamicPhysicsObject)smartEnemy);
+                    dynamicPhysicsObjects.Remove((IDynamicPhysicsObject)removable);
+                    physicsObjects.Remove((IDynamicPhysicsObject)removable);
                 }
             }
         }
         // Show win state if 3 coins are collected in the hero's score
-        if (physicsObjects.OfType<Hero>().First().Score >= 3)
-        {
-            game.ChangeState(new Level2State(game, graphicsDevice, content));
-        }
-
-        // If hero lose is true, change to lose state
-        if (physicsObjects.OfType<Hero>().First().Lose)
+        if (hero.IsRemoved())
         {
             game.ChangeState(new LoseState(game, graphicsDevice, content));
+        }
+        else if (hero.Score >= 3)
+        {
+            game.ChangeState(new Level2State(game, graphicsDevice, content));
         }
     }
 
@@ -297,7 +278,10 @@ public class Level1State : State
             }
 
             dynamicPhysicsObject.HandleCollisions(collisions);
-            dynamicPhysicsObject.ApplyGravity();
+            if (dynamicPhysicsObject is IGravityObject gravityObject)
+            {
+                gravityObject.ApplyGravity();
+            }
         }
     }
 }
