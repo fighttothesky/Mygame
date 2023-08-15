@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.interfaces;
 using System.Collections.Generic;
 
 namespace MyGame.Sprites;
 
-public class SpriteAnimation : Sprite
+public class SpriteAnimation : Sprite, IGameObject
 {
     private readonly double fps;
 

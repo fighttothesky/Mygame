@@ -11,8 +11,6 @@ public class AnimationManager : IGameObject
     public Vector2 Position { get; private set; }
     public SpriteAnimation CurrentAnimation { get; private set; }
 
-    public bool isRemoved => false;
-
     public AnimationManager(SpriteAnimation startingAnimation, Vector2 startingPosition)
     {
         Position = startingPosition;

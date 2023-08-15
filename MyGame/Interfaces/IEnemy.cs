@@ -1,6 +1,6 @@
 ﻿namespace MyGame.interfaces
 {
-    public interface IEnemy
+    public interface IEnemy : IPhysicsObject
     {
 
     }

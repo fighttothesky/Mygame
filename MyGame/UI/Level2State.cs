@@ -64,10 +64,10 @@ public class Level2State : State
         Hero hero = new Hero(contentManager, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 0));
 
-        Enemy1 enemy1 = new Enemy1(contentManager, 400);
+        Snail enemy1 = new Snail(contentManager, 400);
         enemy1.animationManager.SetPosition(new Vector2(1400, 500));
 
-        Enemy2 enemy2 = new Enemy2(contentManager, 500);
+        Bird enemy2 = new Bird(contentManager, 500);
         enemy2.animationManager.SetPosition(new Vector2(650, 0));
 
 
@@ -250,7 +250,7 @@ public class Level2State : State
                 }
             }
 
-            // check if game object is a Enemy1
+            // check if game object is a Snail
             if (gameObjects[i] is ISmartEnemy smartEnemy)
             {
                 // check if smartEnemy is removed

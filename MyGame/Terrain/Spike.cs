@@ -5,7 +5,7 @@ using MyGame.interfaces;
 using MyGame.Sprites;
 
 namespace MyGame.Terrain;
-public class Spike : IPhysicsObject, IEnemy
+public class Spike : IEnemy
 {
     public Sprite Sprite { get; }
 
