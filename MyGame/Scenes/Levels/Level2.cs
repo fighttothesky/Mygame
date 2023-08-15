@@ -5,23 +5,22 @@ using MyGame.Characters;
 using MyGame.Collisions;
 using MyGame.Input;
 using MyGame.interfaces;
+using MyGame.Scenes.UI;
 using MyGame.Terrain;
 using MyGame.Terrain.Blocks;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MyGame.UI;
-public class Level1State : State
+namespace MyGame.Scenes.Levels;
+internal class Level2 : Scene
 {
 
     // TODO: make getter for gameObjects (combo dynamicPhysicsObjects and physicsObjects)
     private List<IGameObject> gameObjects;
     private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
-    private List<IPhysicsObject> physicsObjects = new List<IPhysicsObject>();
+    private List<IPhysicsObject> physicsObjects;
 
     private SpriteFont font;
-
-    private Hero hero;
 
 
     // 1 -> earth top
@@ -58,53 +57,58 @@ public class Level1State : State
             { 1,2,2,2,2,2,2,2,2,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,4,4,7,7,7,1 },
     };
 
-    public Level1State(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
-      : base(game, graphicsDevice, contentManager)
+    public Level2(SceneManager sceneManager)
+      : base(sceneManager)
     {
-        font = content.Load<SpriteFont>("Font");
+        font = sceneManager.Content.Load<SpriteFont>("Font");
 
-        hero = new Hero(contentManager, new KeyboardReader());
+        Hero hero = new Hero(sceneManager.Content, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 0));
 
-        Snail enemy1 = new Snail(contentManager, 400);
+        Snail enemy1 = new Snail(sceneManager.Content, 400);
         enemy1.animationManager.SetPosition(new Vector2(1400, 500));
 
-        Bird enemy2 = new Bird(contentManager, 500);
+        Bird enemy2 = new Bird(sceneManager.Content, 500);
         enemy2.animationManager.SetPosition(new Vector2(650, 0));
-
-
-        Spike spike1 = new Spike(contentManager);
-        spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.SpritePosition = new Vector2(420, 900);
-
-        Spike spike2 = new Spike(contentManager);
-        spike2.Sprite.Scale = new Vector2(4, 4);
-        spike2.Sprite.SpritePosition = new Vector2(360, 900);
-
-
-        Spike spike3 = new Spike(contentManager);
-        spike3.Sprite.Scale = new Vector2(4, 4);
-        spike3.Sprite.SpritePosition = new Vector2(1620, 960);
-
-        Spike spike4 = new Spike(contentManager);
-        spike4.Sprite.Scale = new Vector2(4, 4);
-        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
-
-        // COINS
-        Coin kiwi1 = new Coin(contentManager);
-        kiwi1.animationManager.SetPosition(new Vector2(100, 500));
-
-        Coin kiwi2 = new Coin(contentManager);
-        kiwi2.animationManager.SetPosition(new Vector2(300, 100));
-
-        Coin kiwi3 = new Coin(contentManager);
-        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
 
         dynamicPhysicsObjects = new List<IDynamicPhysicsObject>
         {
             hero,
             enemy1,
             enemy2,
+        };
+
+        Spike spike1 = new Spike(sceneManager.Content);
+        spike1.Sprite.Scale = new Vector2(4, 4);
+        spike1.Sprite.SpritePosition = new Vector2(420, 900);
+
+        Spike spike2 = new Spike(sceneManager.Content);
+        spike2.Sprite.Scale = new Vector2(4, 4);
+        spike2.Sprite.SpritePosition = new Vector2(360, 900);
+
+
+        Spike spike3 = new Spike(sceneManager.Content);
+        spike3.Sprite.Scale = new Vector2(4, 4);
+        spike3.Sprite.SpritePosition = new Vector2(1620, 960);
+
+        Spike spike4 = new Spike(sceneManager.Content);
+        spike4.Sprite.Scale = new Vector2(4, 4);
+        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
+
+
+
+        // COINS
+        Coin kiwi1 = new Coin(sceneManager.Content);
+        kiwi1.animationManager.SetPosition(new Vector2(100, 500));
+
+        Coin kiwi2 = new Coin(sceneManager.Content);
+        kiwi2.animationManager.SetPosition(new Vector2(300, 100));
+
+        Coin kiwi3 = new Coin(sceneManager.Content);
+        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
+
+        physicsObjects = new List<IPhysicsObject>
+        {
             spike1,
             spike2,
             spike3,
@@ -121,79 +125,79 @@ public class Level1State : State
             {
                 if (gameboard[l, c] == 1)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.EARTH_TOP);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.EARTH_TOP);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 2)
                 {
-                    Block block = new Block(contentManager, Enums.BlockType.EARTH_CENTER);
-                    block.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block = new Block(sceneManager.Content, Enums.BlockType.EARTH_CENTER);
+                    block.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block);
                 }
                 if (gameboard[l, c] == 3)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP_LEFTCORNER);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_TOP_LEFTCORNER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
 
                 if (gameboard[l, c] == 4)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_TOP);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 5)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP_RIGHTCORNER);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_TOP_RIGHTCORNER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 6)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_LEFT);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_LEFT);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 7)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_CENTER);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_CENTER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 8)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_RIGHT);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_RIGHT);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 9)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM_LEFTCORNER);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_BOTTOM_LEFTCORNER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 10)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_BOTTOM);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 11)
                 {
-                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM_RIGHTCORNER);
-                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
+                    Block block2 = new Block(sceneManager.Content, Enums.BlockType.STONE_BOTTOM_RIGHTCORNER);
+                    block2.SpritePosition = new Vector2(c * 15 * 4 - 15 * 4, l * 15 * 4 - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
@@ -223,7 +227,7 @@ public class Level1State : State
         foreach (var physicsObject in physicsObjects)
         {
             if (physicsObject is Hero)
-                spriteBatch.DrawString(font, string.Format("Points: " + ((Hero)physicsObject).Score, ++i, ((Hero)physicsObject)), new Vector2(10, fontY += 20), Color.Black);
+                spriteBatch.DrawString(font, string.Format("Points: " + ((Hero)physicsObject).Score, ++i, (Hero)physicsObject), new Vector2(10, fontY += 20), Color.Black);
         }
 
         spriteBatch.End();
@@ -234,25 +238,40 @@ public class Level1State : State
     {
         for (int i = 0; i < gameObjects.Count; i++)
         {
-            if (gameObjects[i] is IRemovable removable && removable is not Hero)
+            // check if game object is a coin
+            if (gameObjects[i] is Coin coin)
             {
-                if (removable.IsRemoved())
+                // check if coin is removed
+                if (coin.IsRemoved())
                 {
-                    // Remove removable from game objects
+                    // Remove coin from game objects
                     gameObjects.RemoveAt(i--);
-                    dynamicPhysicsObjects.Remove((IDynamicPhysicsObject)removable);
-                    physicsObjects.Remove((IDynamicPhysicsObject)removable);
+                    physicsObjects.Remove(coin);
+                }
+            }
+
+            // check if game object is a Snail
+            if (gameObjects[i] is IRemovable smartEnemy)
+            {
+                // check if smartEnemy is removed
+                if (smartEnemy.IsRemoved())
+                {
+                    // Remove smartEnemy from game objects
+                    gameObjects.RemoveAt(i--);
+                    physicsObjects.Remove((IDynamicPhysicsObject)smartEnemy);
                 }
             }
         }
         // Show win state if 3 coins are collected in the hero's score
-        if (hero.IsRemoved())
+        if (physicsObjects.OfType<Hero>().First().Score >= 3)
         {
-            game.ChangeState(new LoseState(game, graphicsDevice, content));
+            sceneManager.ChangeLevel(new Victory(sceneManager));
         }
-        else if (hero.Score >= 3)
+
+        // If hero lose is true, change to lose state
+        if (physicsObjects.OfType<Hero>().First().IsRemoved())
         {
-            game.ChangeState(new Level2State(game, graphicsDevice, content));
+            sceneManager.ChangeLevel(new GameOver(sceneManager));
         }
     }
 
@@ -281,6 +300,7 @@ public class Level1State : State
             if (dynamicPhysicsObject is IGravityObject gravityObject)
             {
                 gravityObject.ApplyGravity();
+
             }
         }
     }

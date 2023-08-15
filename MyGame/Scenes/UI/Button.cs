@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using MyGame.interfaces;
 using System;
 
-namespace MyGame.UI
+namespace MyGame.Scenes.UI
 {
     public class Button : IGameObject
     {
@@ -58,8 +58,8 @@ namespace MyGame.UI
 
             if (!string.IsNullOrEmpty(Text))
             {
-                var x = (Rectangle.X + (Rectangle.Width / 2)) - (font.MeasureString(Text).X / 2);
-                var y = (Rectangle.Y + (Rectangle.Height / 2)) - (font.MeasureString(Text).Y / 2);
+                var x = Rectangle.X + Rectangle.Width / 2 - font.MeasureString(Text).X / 2;
+                var y = Rectangle.Y + Rectangle.Height / 2 - font.MeasureString(Text).Y / 2;
 
                 spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
             }

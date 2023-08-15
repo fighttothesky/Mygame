@@ -2,20 +2,21 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.interfaces;
+using MyGame.Scenes.Levels;
 using System;
 using System.Collections.Generic;
 
-namespace MyGame.UI;
+namespace MyGame.Scenes.UI;
 
-public class MenuState : State
+internal class MainMenu : Scene
 {
     private List<IGameObject> components;
 
-    public MenuState(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
-      : base(game, graphicsDevice, contentManager)
+    public MainMenu(SceneManager sceneManager)
+      : base(sceneManager)
     {
-        Texture2D buttonTexture = content.Load<Texture2D>("button");
-        SpriteFont buttonFont = content.Load<SpriteFont>("Font");
+        Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
+        SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
 
         var level1Button = new Button(buttonTexture, buttonFont)
         {
@@ -63,12 +64,12 @@ public class MenuState : State
 
     private void Level1Button_Click(object sender, EventArgs e)
     {
-        game.ChangeState(new Level1State(game, graphicsDevice, content));
+        sceneManager.ChangeLevel(new Level1(sceneManager));
     }
 
     private void Level2Button_Click(object sender, EventArgs e)
     {
-        game.ChangeState(new Level2State(game, graphicsDevice, content));
+        sceneManager.ChangeLevel(new Level2(sceneManager));
     }
 
     public override void PostUpdate()
@@ -83,7 +84,7 @@ public class MenuState : State
 
     private void QuitGameButton_Click(object sender, EventArgs e)
     {
-        game.Exit();
+        sceneManager.Exit();
     }
 }
 

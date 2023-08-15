@@ -20,8 +20,8 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
     private readonly AnimationMover character;
     private readonly IInputReader inputReader;
 
-    private List<Rectangle> currentCollisions;
-    private List<Rectangle> currentIntersections;
+    private List<Rectangle> currentCollisions = new List<Rectangle>();
+    private List<Rectangle> currentIntersections = new List<Rectangle>();
 
     private List<Direction> forbiddenDirections;
     private SpriteAnimation idleAnimation;

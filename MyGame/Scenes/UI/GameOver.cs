@@ -5,17 +5,17 @@ using MyGame.interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace MyGame.UI
+namespace MyGame.Scenes.UI
 {
-    internal class LoseState : State
+    internal class GameOver : Scene
     {
         private List<IGameObject> components;
 
-        public LoseState(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
-          : base(game, graphicsDevice, contentManager)
+        public GameOver(SceneManager sceneManager)
+      : base(sceneManager)
         {
-            Texture2D buttonTexture = content.Load<Texture2D>("button");
-            SpriteFont buttonFont = content.Load<SpriteFont>("Font");
+            Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
+            SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
 
             var backToMenu = new Button(buttonTexture, buttonFont)
             {
@@ -47,7 +47,7 @@ namespace MyGame.UI
             foreach (var component in components)
                 component.Draw(spriteBatch);
             // draw text "VICTORY" on screen
-            spriteBatch.DrawString(content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
+            spriteBatch.DrawString(sceneManager.Content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
 
 
             spriteBatch.End();
@@ -65,11 +65,11 @@ namespace MyGame.UI
 
         private void BackToMenu_Click(object sender, EventArgs e)
         {
-            game.ChangeState(new MenuState(game, graphicsDevice, content));
+            sceneManager.ChangeLevel(new MainMenu(sceneManager));
         }
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
-            game.Exit();
+            sceneManager.Exit();
         }
     }
 }

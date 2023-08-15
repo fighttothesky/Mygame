@@ -5,17 +5,17 @@ using MyGame.interfaces;
 using System;
 using System.Collections.Generic;
 
-namespace MyGame.UI
+namespace MyGame.Scenes.UI
 {
-    internal class WinState : State
+    internal class Victory : Scene
     {
         private List<IGameObject> components;
 
-        public WinState(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
-          : base(game, graphicsDevice, contentManager)
+        public Victory(SceneManager sceneManager)
+            : base(sceneManager)
         {
-            Texture2D buttonTexture = content.Load<Texture2D>("button");
-            SpriteFont buttonFont = content.Load<SpriteFont>("Font");
+            Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
+            SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
 
             Button quitGameButton = new Button(buttonTexture, buttonFont)
             {
@@ -38,7 +38,7 @@ namespace MyGame.UI
             foreach (var component in components)
                 component.Draw(spriteBatch);
             // draw text "VICTORY" on screen
-            spriteBatch.DrawString(content.Load<SpriteFont>("Font"), "VICTORY", new Vector2(300, 100), Color.White);
+            spriteBatch.DrawString(sceneManager.Content.Load<SpriteFont>("Font"), "VICTORY", new Vector2(300, 100), Color.White);
 
 
             spriteBatch.End();
@@ -56,7 +56,7 @@ namespace MyGame.UI
 
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
-            game.Exit();
+            sceneManager.Exit();
         }
     }
 }
