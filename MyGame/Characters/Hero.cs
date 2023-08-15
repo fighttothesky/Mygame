@@ -14,7 +14,7 @@ namespace MyGame.Characters;
 
 internal class Hero : IDynamicPhysicsObject
 {
-    const int MAX_SINK_HEIGHT = 1;
+    const int MAX_SINK_HEIGHT = 4;
 
     public readonly AnimationManager animationManager;
     private readonly AnimationMover character;

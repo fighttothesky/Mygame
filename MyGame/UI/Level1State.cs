@@ -33,7 +33,17 @@ public class Level1State : State
             { 1,0,0,0,0,0,0,2 },
             { 1,0,1,1,1,1,1,2 },
             { 1,0,0,0,0,0,0,0 },
-            { 1,1,1,1,1,1,1,1 }
+            { 1,1,1,1,1,1,1,1 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
+            { 1,0,0,0,0,0,0,0 },
     };
 
     public Level1State(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
@@ -99,14 +109,14 @@ public class Level1State : State
                 if (gameboard[l, c] == 1)
                 {
                     BlockSubFrame block = new BlockSubFrame(contentManager);
-                    block.SpritePosition = new Vector2(c * 15 * 4, l * 15 * 4);
+                    block.SpritePosition = new Vector2((c * 15 * 4)-15*4, (l * 15 * 4)-15*4);
                     block.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block);
                 }
                 if (gameboard[l,c] == 2)
                 {
                     BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.GREY_RIGHT_CORNER);
-                    block2.SpritePosition = new Vector2(c * 15 * 4, l * 15 * 4);
+                    block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
