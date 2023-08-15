@@ -210,7 +210,7 @@ public class Level1 : Scene
 
     public SceneManager SceneManager { get; }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
 
         spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);

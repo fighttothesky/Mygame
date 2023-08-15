@@ -50,7 +50,7 @@ internal class MainMenu : Scene
               };
     }
 
-    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Begin();
 

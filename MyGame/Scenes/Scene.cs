@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.interfaces;
+using MyGame.Scenes.UI;
 
 namespace MyGame.Scenes
 {
-    public abstract class Scene
+    public abstract class Scene : IGameObject
     {
         protected SceneManager sceneManager;
 
@@ -16,6 +18,6 @@ namespace MyGame.Scenes
 
         public abstract void PostUpdate();
 
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw(SpriteBatch spriteBatch);
     }
 }
