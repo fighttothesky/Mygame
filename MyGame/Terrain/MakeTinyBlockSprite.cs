@@ -31,7 +31,7 @@ namespace MyGame.Terrain
                 {
                     blocks.Add(new Rectangle(i, j, BLOCKWIDTH, BLOCKHEIGHT));
                 }
-            }   
+            }
         }
     }
 }

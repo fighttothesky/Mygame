@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace MyGame.Sprites;
 
@@ -29,8 +29,8 @@ public class SpriteAnimation : Sprite
         int heightOfFrame = Texture.Height / numberOfHeightSprites;
 
         for (int y = 0; y <= Texture.Height - heightOfFrame; y += heightOfFrame)
-        for (int x = 0; x <= Texture.Width - widthOfFrame; x += widthOfFrame)
-            frames.Add(new Rectangle(x, y, widthOfFrame, heightOfFrame));
+            for (int x = 0; x <= Texture.Width - widthOfFrame; x += widthOfFrame)
+                frames.Add(new Rectangle(x, y, widthOfFrame, heightOfFrame));
     }
 
     public override void Update(GameTime gameTime)

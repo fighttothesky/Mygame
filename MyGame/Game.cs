@@ -1,18 +1,11 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MyGame.Characters;
-using MyGame.Collisions;
-using MyGame.Input;
-using MyGame.interfaces;
-using MyGame.Terrain;
 using MyGame.UI;
 
 namespace MyGame;
 
-public class Game1 : Game
+public class Game : Microsoft.Xna.Framework.Game
 {
     //private List<IDynamicPhysicsObject> dynamicPhysicsObjects;
     //private List<IGameObject> gameObjects;
@@ -30,7 +23,7 @@ public class Game1 : Game
         nextState = state;
     }
 
-    public Game1()
+    public Game()
     {
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -43,6 +36,7 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+
         //menu
         currentState = new MenuState(this, GraphicsDevice, Content);
 

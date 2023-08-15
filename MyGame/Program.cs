@@ -1,4 +1,4 @@
 ﻿using MyGame;
 
-using Game1 game = new();
+using Game game = new();
 game.Run();

@@ -1,15 +1,14 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using MyGame.Characters;
+using MyGame.Collisions;
 using MyGame.Input;
 using MyGame.interfaces;
 using MyGame.Terrain;
-using MyGame.Collisions;
-using System.Linq;
 using MyGame.Terrain.Blocks;
-using SharpDX.Direct2D1.Effects;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyGame.UI;
 public class Level1State : State
@@ -57,13 +56,13 @@ public class Level1State : State
             { 1,2,2,2,2,2,2,2,2,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,4,4,7,7,7,1 },
     };
 
-    public Level1State(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+    public Level1State(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
       : base(game, graphicsDevice, contentManager)
     {
-        font = _content.Load<SpriteFont>("Font");
+        font = content.Load<SpriteFont>("Font");
 
         Hero hero = new Hero(contentManager, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(0,0));
+        hero.animationManager.SetPosition(new Vector2(0, 0));
 
         Enemy1 enemy1 = new Enemy1(contentManager, 400);
         enemy1.animationManager.SetPosition(new Vector2(1400, 500));
@@ -122,25 +121,25 @@ public class Level1State : State
         // Make the gameboard
         for (int l = 0; l < gameboard.GetLength(0); l++)
         {
-            for (int c = 0 ; c < gameboard.GetLength(1); c++)
+            for (int c = 0; c < gameboard.GetLength(1); c++)
             {
                 if (gameboard[l, c] == 1)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.EARTH_TOP);
+                    Block block2 = new Block(contentManager, Enums.BlockType.EARTH_TOP);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 2)
                 {
-                    BlockSubFrame block = new BlockSubFrame(contentManager, Enums.BlockType.EARTH_CENTER);
-                    block.SpritePosition = new Vector2((c * 15 * 4)-15*4, (l * 15 * 4)-15*4);
+                    Block block = new Block(contentManager, Enums.BlockType.EARTH_CENTER);
+                    block.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block);
                 }
-                if (gameboard[l,c] == 3)
+                if (gameboard[l, c] == 3)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP_LEFTCORNER);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP_LEFTCORNER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
@@ -148,56 +147,56 @@ public class Level1State : State
 
                 if (gameboard[l, c] == 4)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 5)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_TOP_RIGHTCORNER);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_TOP_RIGHTCORNER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 6)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_LEFT);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_LEFT);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 7)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_CENTER);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_CENTER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 8)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_RIGHT);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_RIGHT);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 9)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM_LEFTCORNER);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM_LEFTCORNER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 10)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
                 }
                 if (gameboard[l, c] == 11)
                 {
-                    BlockSubFrame block2 = new BlockSubFrame(contentManager, Enums.BlockType.STONE_BOTTOM_RIGHTCORNER);
+                    Block block2 = new Block(contentManager, Enums.BlockType.STONE_BOTTOM_RIGHTCORNER);
                     block2.SpritePosition = new Vector2((c * 15 * 4) - 15 * 4, (l * 15 * 4) - 15 * 4);
                     block2.Scale = new Vector2(4, 4);
                     physicsObjects.Add(block2);
@@ -261,19 +260,19 @@ public class Level1State : State
                     gameObjects.RemoveAt(i--);
                     physicsObjects.Remove((IDynamicPhysicsObject)smartEnemy);
                 }
-            }   
+            }
         }
         // Show win state if 3 coins are collected in the hero's score
         if (physicsObjects.OfType<Hero>().First().Score >= 3)
         {
-            _game.ChangeState(new WinState(_game, _graphicsDevice, _content));
+            game.ChangeState(new Level2State(game, graphicsDevice, content));
         }
 
         // If hero lose is true, change to lose state
         if (physicsObjects.OfType<Hero>().First().Lose)
         {
-            _game.ChangeState(new LoseState(_game, _graphicsDevice, _content));
-        }  
+            game.ChangeState(new LoseState(game, graphicsDevice, content));
+        }
     }
 
     public override void Update(GameTime gameTime)

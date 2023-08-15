@@ -14,7 +14,7 @@ public class Sprite : IGameObject
     public Vector2 Scale { get; set; } = Vector2.One;
     public Vector2 Origin { get; set; }
     public Vector2 SpritePosition { get; set; }
-    public Vector2 FramePosition { get; set; } = new Vector2(0,0);
+    public Vector2 FramePosition { get; set; } = new Vector2(0, 0);
     public float Rotation { get; set; }
     public bool Debug { get; set; } = true;
     public Texture2D Texture { get; }

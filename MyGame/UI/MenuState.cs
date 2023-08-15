@@ -1,92 +1,89 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.interfaces;
-using MyGame.Enums;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Content;
-using System.ComponentModel;
 using System;
+using System.Collections.Generic;
 
 namespace MyGame.UI;
 
 public class MenuState : State
 {
-        private List<Component> _components;
+    private List<IGameObject> components;
 
-        public MenuState(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
-          : base(game, graphicsDevice, contentManager)
+    public MenuState(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+      : base(game, graphicsDevice, contentManager)
+    {
+        Texture2D buttonTexture = content.Load<Texture2D>("button");
+        SpriteFont buttonFont = content.Load<SpriteFont>("Font");
+
+        var level1Button = new Button(buttonTexture, buttonFont)
         {
-            Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Font");
+            Position = new Vector2(300, 100),
+            Text = "Level 1",
+        };
 
-            var level1Button = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(300, 100),
-                Text = "Level 1",
-            };
+        level1Button.Click += Level1Button_Click;
 
-            level1Button.Click += Level1Button_Click;
+        var level2Button = new Button(buttonTexture, buttonFont)
+        {
+            Position = new Vector2(300, 200),
+            Text = "Level 2",
+        };
 
-            var level2Button = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(300, 200),
-                Text = "Level 2",
-            };
-
-            level2Button.Click += Level2Button_Click;
+        level2Button.Click += Level2Button_Click;
 
 
         Button quitGameButton = new Button(buttonTexture, buttonFont)
-            {
-                Position = new Vector2(300, 300),
-                Text = "Quit Game",
-            };
+        {
+            Position = new Vector2(300, 300),
+            Text = "Quit Game",
+        };
 
-            quitGameButton.Click += QuitGameButton_Click;
+        quitGameButton.Click += QuitGameButton_Click;
 
-            _components = new List<Component>()
+        components = new List<IGameObject>()
               {
                 level1Button,
                 level2Button,
                 quitGameButton,
               };
-        }
+    }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
+    public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+    {
+        spriteBatch.Begin();
 
-            foreach (var component in _components)
-                component.Draw(gameTime, spriteBatch);
+        foreach (var component in components)
+            component.Draw(spriteBatch);
 
-            spriteBatch.End();
-        }
+        spriteBatch.End();
+    }
 
 
-        private void Level1Button_Click(object sender, EventArgs e)
-        {
-            _game.ChangeState(new Level1State(_game, _graphicsDevice, _content));
-        }
+    private void Level1Button_Click(object sender, EventArgs e)
+    {
+        game.ChangeState(new Level1State(game, graphicsDevice, content));
+    }
 
-        private void Level2Button_Click(object sender, EventArgs e)
-        {
-            _game.ChangeState(new Level2State(_game, _graphicsDevice, _content));
-        }
+    private void Level2Button_Click(object sender, EventArgs e)
+    {
+        game.ChangeState(new Level2State(game, graphicsDevice, content));
+    }
 
-        public override void PostUpdate()
-        {
-            // remove sprites if they're not needed
-        }
+    public override void PostUpdate()
+    {
+    }
 
-        public override void Update(GameTime gameTime)
-        {
-            foreach (var component in _components)
-                component.Update(gameTime);
-        }
+    public override void Update(GameTime gameTime)
+    {
+        foreach (var component in components)
+            component.Update(gameTime);
+    }
 
-        private void QuitGameButton_Click(object sender, EventArgs e)
-        {
-            _game.Exit();
-        }
+    private void QuitGameButton_Click(object sender, EventArgs e)
+    {
+        game.Exit();
+    }
 }
 

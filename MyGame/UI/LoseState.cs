@@ -1,23 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyGame.UI
 {
     internal class LoseState : State
     {
-        private List<Component> _components;
+        private List<IGameObject> components;
 
-        public LoseState(Game1 game, GraphicsDevice graphicsDevice, ContentManager contentManager)
+        public LoseState(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager)
           : base(game, graphicsDevice, contentManager)
         {
-            Texture2D buttonTexture = _content.Load<Texture2D>("button");
-            SpriteFont buttonFont = _content.Load<SpriteFont>("Font");
+            Texture2D buttonTexture = content.Load<Texture2D>("button");
+            SpriteFont buttonFont = content.Load<SpriteFont>("Font");
 
             var backToMenu = new Button(buttonTexture, buttonFont)
             {
@@ -35,7 +33,7 @@ namespace MyGame.UI
 
             quitGameButton.Click += QuitGameButton_Click;
 
-            _components = new List<Component>()
+            components = new List<IGameObject>()
               {
                 backToMenu,
                 quitGameButton,
@@ -46,10 +44,10 @@ namespace MyGame.UI
         {
             spriteBatch.Begin();
 
-            foreach (var component in _components)
-                component.Draw(gameTime, spriteBatch);
+            foreach (var component in components)
+                component.Draw(spriteBatch);
             // draw text "VICTORY" on screen
-            spriteBatch.DrawString(_content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
+            spriteBatch.DrawString(content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
 
 
             spriteBatch.End();
@@ -61,17 +59,17 @@ namespace MyGame.UI
 
         public override void Update(GameTime gameTime)
         {
-            foreach (var component in _components)
+            foreach (var component in components)
                 component.Update(gameTime);
         }
 
         private void BackToMenu_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+            game.ChangeState(new MenuState(game, graphicsDevice, content));
         }
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
-            _game.Exit();
+            game.Exit();
         }
     }
 }

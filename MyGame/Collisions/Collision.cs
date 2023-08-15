@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyGame.Collisions;
 
@@ -59,14 +59,14 @@ public class Collision
         if (Direction.Bottom) directions.Add(Enums.Direction.DOWN);
         return directions;
     }
-    
+
     private Vector2 CalculateScale()
     {
         return This.GetSprite().Scale.X * This.GetSprite().Scale.Y > Other.GetSprite().Scale.X * Other.GetSprite().Scale.Y
             ? This.GetSprite().Scale
             : Other.GetSprite().Scale;
     }
-    
+
     private List<Point> GetFilledPixels(Sprite sprite, Rectangle globalIntersection)
     {
         Rectangle localIntersection = new Rectangle(globalIntersection.Location - sprite.SpritePosition.ToPoint(), globalIntersection.Size);
@@ -80,10 +80,10 @@ public class Collision
             Math.Min(localIntersection.Location.X, sprite.Texture.Width - localIntersection.Width),
             Math.Min(localIntersection.Location.Y, sprite.Texture.Height - localIntersection.Height)
         );
-        
+
         var pixelCount = localIntersection.Size.X * localIntersection.Size.Y;
         if (pixelCount == 0) return new List<Point>();
-        
+
         Color[] flatPixels = new Color[pixelCount];
         sprite.Texture.GetData(0, localIntersection, flatPixels, 0, pixelCount);
 
