@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MyGame.Scenes;
-using MyGame.Scenes.UI;
 
 namespace MyGame;
 

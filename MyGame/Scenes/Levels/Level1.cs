@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Characters;
 using MyGame.Collisions;
@@ -9,7 +8,6 @@ using MyGame.Scenes.UI;
 using MyGame.Terrain;
 using MyGame.Terrain.Blocks;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyGame.Scenes.Levels;
 public class Level1 : Scene

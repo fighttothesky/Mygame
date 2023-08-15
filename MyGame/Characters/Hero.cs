@@ -6,7 +6,6 @@ using MyGame.Collisions;
 using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
-using MyGame.Terrain;
 using System.Collections.Generic;
 using System.Linq;
 

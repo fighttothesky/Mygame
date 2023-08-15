@@ -6,7 +6,6 @@ using MyGame.Enums;
 using MyGame.interfaces;
 using MyGame.Sprites;
 using System.Collections.Generic;
-using System.Net;
 
 namespace MyGame.Characters
 {
