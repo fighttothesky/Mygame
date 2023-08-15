@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Characters
 {
-    internal class Enemy1 : IDynamicPhysicsObject, ISmartEnemy
+    internal class Snail : IDynamicPhysicsObject, ISmartEnemy
     {
         // Does this enemy need forbidden directions?
 
@@ -34,7 +34,7 @@ namespace MyGame.Characters
 
         Direction direction = Direction.NONE;
 
-        public Enemy1(ContentManager contentManager, float newDistance)
+        public Snail(ContentManager contentManager, float newDistance)
         {
             CreateAnimations(contentManager);
             animationManager = new AnimationManager(walkAnimation, Vector2.One);

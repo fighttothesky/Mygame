@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Characters
 {
-    internal class Enemy2 : IDynamicPhysicsObject, ISmartEnemy
+    internal class Bird : IDynamicPhysicsObject, ISmartEnemy
     {
         // Does this enemy need forbidden directions?
 
@@ -34,7 +34,7 @@ namespace MyGame.Characters
 
         Direction direction = Direction.NONE;
 
-        public Enemy2(ContentManager contentManager, float newDistanceUp)
+        public Bird(ContentManager contentManager, float newDistanceUp)
         {
             CreateAnimations(contentManager);
             animationManager = new AnimationManager(movingAnimation, Vector2.One);
@@ -116,7 +116,7 @@ namespace MyGame.Characters
 
         public void ApplyGravity()
         {
-
+            // Flying enemies don't need gravity
         }
     }
 }
