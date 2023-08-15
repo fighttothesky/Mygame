@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Scenes.UI
 {
-    internal class Victory : Scene
+    internal class Victory : UIScene
     {
         private List<IGameObject> components;
 
@@ -14,9 +14,15 @@ namespace MyGame.Scenes.UI
             : base(sceneManager)
         {
             Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
-            SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
+            SpriteFont font = sceneManager.Content.Load<SpriteFont>("Font");
+            Init(buttonTexture, font);
+        }
 
-            Button quitGameButton = new Button(buttonTexture, buttonFont)
+        private void Init(Texture2D buttonTexture, SpriteFont font)
+        {
+            Text text = new Text("YOU WIN!", font, new Vector2(300, 100), Color.White);
+
+            Button quitGameButton = new Button(buttonTexture, font)
             {
                 Position = new Vector2(300, 300),
                 Text = "Quit Game",
@@ -28,29 +34,6 @@ namespace MyGame.Scenes.UI
               {
                 quitGameButton,
               };
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
-
-            foreach (var component in components)
-                component.Draw(spriteBatch);
-            // draw text "VICTORY" on screen
-            spriteBatch.DrawString(sceneManager.Content.Load<SpriteFont>("Font"), "VICTORY", new Vector2(300, 100), Color.White);
-
-
-            spriteBatch.End();
-        }
-
-        public override void PostUpdate()
-        {
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            foreach (var component in components)
-                component.Update(gameTime);
         }
 
         private void QuitGameButton_Click(object sender, EventArgs e)

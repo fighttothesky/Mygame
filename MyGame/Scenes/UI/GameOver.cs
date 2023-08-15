@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Scenes.UI
 {
-    internal class GameOver : Scene
+    internal class GameOver : UIScene
     {
         private List<IGameObject> components;
 
@@ -14,9 +14,17 @@ namespace MyGame.Scenes.UI
       : base(sceneManager)
         {
             Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
-            SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
+            SpriteFont font = sceneManager.Content.Load<SpriteFont>("Font");
 
-            var backToMenu = new Button(buttonTexture, buttonFont)
+            Init(buttonTexture, font);
+
+        }
+
+        private void Init(Texture2D buttonTexture, SpriteFont font)
+        {
+            Text text = new Text("GAME OVER", font, new Vector2(300, 100), Color.Red);
+
+            var backToMenu = new Button(buttonTexture, font)
             {
                 Position = new Vector2(300, 200),
                 Text = "Back to menu",
@@ -24,7 +32,7 @@ namespace MyGame.Scenes.UI
 
             backToMenu.Click += BackToMenu_Click;
 
-            Button quitGameButton = new Button(buttonTexture, buttonFont)
+            Button quitGameButton = new Button(buttonTexture, font)
             {
                 Position = new Vector2(300, 300),
                 Text = "Quit Game",
@@ -32,40 +40,16 @@ namespace MyGame.Scenes.UI
 
             quitGameButton.Click += QuitGameButton_Click;
 
-            components = new List<IGameObject>()
-              {
-                backToMenu,
-                quitGameButton,
-              };
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Begin();
-
-            foreach (var component in components)
-                component.Draw(spriteBatch);
-            // draw text "VICTORY" on screen
-            spriteBatch.DrawString(sceneManager.Content.Load<SpriteFont>("Font"), "Lose", new Vector2(300, 100), Color.Red);
-
-
-            spriteBatch.End();
-        }
-
-        public override void PostUpdate()
-        {
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            foreach (var component in components)
-                component.Update(gameTime);
+            AddUIComponent(backToMenu);
+            AddUIComponent(quitGameButton);
+            AddUIComponent(text);
         }
 
         private void BackToMenu_Click(object sender, EventArgs e)
         {
             sceneManager.ChangeLevel(new MainMenu(sceneManager));
         }
+
         private void QuitGameButton_Click(object sender, EventArgs e)
         {
             sceneManager.Exit();

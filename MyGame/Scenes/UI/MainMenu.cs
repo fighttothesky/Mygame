@@ -7,16 +7,18 @@ using System.Collections.Generic;
 
 namespace MyGame.Scenes.UI;
 
-internal class MainMenu : Scene
+internal class MainMenu : UIScene
 {
-    private List<IGameObject> components;
-
     public MainMenu(SceneManager sceneManager)
       : base(sceneManager)
     {
         Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
         SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
+        Init(buttonTexture, buttonFont);
+    }
 
+    private void Init(Texture2D buttonTexture, SpriteFont buttonFont)
+    {
         var level1Button = new Button(buttonTexture, buttonFont)
         {
             Position = new Vector2(300, 100),
@@ -42,24 +44,10 @@ internal class MainMenu : Scene
 
         quitGameButton.Click += QuitGameButton_Click;
 
-        components = new List<IGameObject>()
-              {
-                level1Button,
-                level2Button,
-                quitGameButton,
-              };
+        AddUIComponent(level1Button);
+        AddUIComponent(level2Button);
+        AddUIComponent(quitGameButton);
     }
-
-    public override void Draw(SpriteBatch spriteBatch)
-    {
-        spriteBatch.Begin();
-
-        foreach (var component in components)
-            component.Draw(spriteBatch);
-
-        spriteBatch.End();
-    }
-
 
     private void Level1Button_Click(object sender, EventArgs e)
     {
@@ -69,16 +57,6 @@ internal class MainMenu : Scene
     private void Level2Button_Click(object sender, EventArgs e)
     {
         sceneManager.ChangeLevel(new Level2(sceneManager));
-    }
-
-    public override void PostUpdate()
-    {
-    }
-
-    public override void Update(GameTime gameTime)
-    {
-        foreach (var component in components)
-            component.Update(gameTime);
     }
 
     private void QuitGameButton_Click(object sender, EventArgs e)

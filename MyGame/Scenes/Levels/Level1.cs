@@ -244,7 +244,7 @@ public class Level1 : Scene
                 }
             }
         }
-        // Show win state if 3 coins are collected in the hero's score
+
         if (hero.IsRemoved())
         {
             sceneManager.ChangeLevel(new GameOver(sceneManager));
