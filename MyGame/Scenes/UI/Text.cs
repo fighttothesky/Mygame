@@ -1,20 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Screens;
 using MyGame.interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyGame.Scenes.UI
 {
-    internal class Text : IGameObject
+    public class Text : IGameObject
     {
-        SpriteFont font;
+        private SpriteFont font;
         private readonly Vector2 position;
         private readonly Color colorText;
+
+        public bool IsCentered { get; set; }
+        public string Content { get; set; }
 
         public Text(string text, SpriteFont font, Vector2 position, Color colorText)
         {
@@ -24,11 +21,18 @@ namespace MyGame.Scenes.UI
             this.colorText = colorText;
         }
 
-        public string Content { get; set; }
-
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, Content, position, colorText);
+            var drawPosition = position;
+
+            if (IsCentered)
+            {
+                var x = position.X - (font.MeasureString(Content).X / 2);
+                var y = position.Y - (font.MeasureString(Content).Y / 2);
+                drawPosition = new Vector2(x, y);
+            }
+
+            spriteBatch.DrawString(font, Content, drawPosition, colorText);
         }
 
         public void Update(GameTime gameTime)

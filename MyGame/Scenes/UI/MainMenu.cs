@@ -17,42 +17,43 @@ internal class MainMenu : UIScene
     {
         Texture2D buttonTexture = sceneManager.Content.Load<Texture2D>("button");
         SpriteFont buttonFont = sceneManager.Content.Load<SpriteFont>("Font");
-        Init(buttonTexture, buttonFont);
+        SpriteFont titleFont = sceneManager.Content.Load<SpriteFont>("TitleFont");
+        Init(buttonTexture, buttonFont, titleFont);
     }
 
-    private void Init(Texture2D buttonTexture, SpriteFont buttonFont)
+    private void Init(Texture2D buttonTexture, SpriteFont buttonFont, SpriteFont titleFont)
     {
-        int middleOfScreen = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
-
         var background = new Background(sceneManager.Content, "Background_menu");
         background.Sprite.Scale = new Vector2(4, 4);
         AddUIComponent(background);
 
-        var level1Button = new Button(buttonTexture, buttonFont)
+        int middleOfScreen = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
+        Text text = new Text("THE RADISHMAN", titleFont, new Vector2(middleOfScreen, 250), Color.White);
+        text.IsCentered = true;
+
+        var level1Button = new Button(buttonTexture, buttonFont, "Level 1")
         {
-            Position = new Vector2(middleOfScreen - 150, 400),
-            Text = "Level 1",
+            Position = new Vector2(middleOfScreen - 150, 400)
         };
 
         level1Button.Click += Level1Button_Click;
 
-        var level2Button = new Button(buttonTexture, buttonFont)
+        var level2Button = new Button(buttonTexture, buttonFont, "Level 2")
         {
-            Position = new Vector2(middleOfScreen - 150, 500),
-            Text = "Level 2",
+            Position = new Vector2(middleOfScreen - 150, 500)
         };
 
         level2Button.Click += Level2Button_Click;
 
 
-        Button quitGameButton = new Button(buttonTexture, buttonFont)
+        Button quitGameButton = new Button(buttonTexture, buttonFont, "Quit Game")
         {
-            Position = new Vector2(middleOfScreen - 150, 600),
-            Text = "Quit Game",
+            Position = new Vector2(middleOfScreen - 150, 600)
         };
 
         quitGameButton.Click += QuitGameButton_Click;
 
+        AddUIComponent(text);
         AddUIComponent(level1Button);
         AddUIComponent(level2Button);
         AddUIComponent(quitGameButton);

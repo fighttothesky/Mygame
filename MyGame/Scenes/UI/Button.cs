@@ -9,35 +9,48 @@ namespace MyGame.Scenes.UI
     public class Button : IGameObject
     {
         private MouseState currentMouse;
-        private SpriteFont font;
         private bool isHovering;
         private MouseState previousMouse;
         private Texture2D texture;
+        private readonly SpriteFont font;
 
         public event EventHandler Click;
         public bool Clicked { get; private set; }
-        public Color PenColour { get; set; }
-        public Vector2 Position { get; set; }
 
+        private Vector2 position;
+        public Vector2 Position { get => position; set => SetPosition(value); }
 
-        public Button(Texture2D texture, SpriteFont font)
+        public Text Text { get; private set; }
+
+        public Button(Texture2D texture, SpriteFont font, string text)
         {
             this.texture = texture;
-
             this.font = font;
-
-            PenColour = Color.Black;
+            SetText(text);
         }
 
         public Rectangle Rectangle
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
+                return new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
             }
         }
 
-        public string Text { get; set; }
+        public void SetText(string text)
+        {
+            var x = Rectangle.X + Rectangle.Width / 2 - font.MeasureString(text).X / 2;
+            var y = Rectangle.Y + Rectangle.Height / 2 - font.MeasureString(text).Y / 2;
+
+            Text = new Text(text, font, new Vector2(x, y), Color.White);
+            Text.IsCentered = false;
+        }
+
+        private void SetPosition(Vector2 position)
+        {
+            this.position = position;
+            SetText(Text.Content);
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -47,14 +60,7 @@ namespace MyGame.Scenes.UI
                 colour = Color.Gray;
 
             spriteBatch.Draw(texture, Rectangle, colour);
-
-            if (!string.IsNullOrEmpty(Text))
-            {
-                var x = Rectangle.X + Rectangle.Width / 2 - font.MeasureString(Text).X / 2;
-                var y = Rectangle.Y + Rectangle.Height / 2 - font.MeasureString(Text).Y / 2;
-
-                spriteBatch.DrawString(font, Text, new Vector2(x, y), PenColour);
-            }
+            Text.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime)
