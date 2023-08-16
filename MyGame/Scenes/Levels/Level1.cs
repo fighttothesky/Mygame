@@ -182,17 +182,17 @@ public class Level1 : Level
 
         Spike spike5 = new Spike(sceneManager.Content);
         spike5.Sprite.Scale = new Vector2(4, 4);
-        spike5.Sprite.SpritePosition = new Vector2(600, 720);
+        spike5.Sprite.SpritePosition = new Vector2(600, 715);
         AddDynamicPhysicsObject(spike5);
 
         Spike spike6 = new Spike(sceneManager.Content);
         spike6.Sprite.Scale = new Vector2(4, 4);
-        spike6.Sprite.SpritePosition = new Vector2(660, 720);
+        spike6.Sprite.SpritePosition = new Vector2(660, 715);
         AddDynamicPhysicsObject(spike6);
 
         // COINS
         Coin kiwi1 = new Coin(sceneManager.Content);
-        kiwi1.animationManager.SetPosition(new Vector2(470, 800));
+        kiwi1.animationManager.SetPosition(new Vector2(470, 750));
         AddDynamicPhysicsObject(kiwi1);
 
         Coin kiwi2 = new Coin(sceneManager.Content);
