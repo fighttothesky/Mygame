@@ -6,7 +6,6 @@ using MyGame.Input;
 using MyGame.interfaces;
 using MyGame.Scenes.UI;
 using MyGame.Terrain;
-using MyGame.Terrain.Blocks;
 using System.Collections.Generic;
 
 namespace MyGame.Scenes.Levels;
@@ -17,58 +16,9 @@ public class Level1 : Level
     public Level1(SceneManager sceneManager)
       : base(sceneManager)
     {
-        InitEntities(sceneManager);
         InitBoard();
+        InitEntities(sceneManager);
     }
-
-    private void InitEntities(SceneManager sceneManager)
-    {
-        hero = new Hero(sceneManager.Content, new KeyboardReader());
-        hero.animationManager.SetPosition(new Vector2(0, 0));
-        AddDynamicPhysicsObject(hero);
-
-        Snail enemy1 = new Snail(sceneManager.Content, 400);
-        enemy1.animationManager.SetPosition(new Vector2(1400, 500));
-        AddDynamicPhysicsObject(enemy1);
-
-        Bird enemy2 = new Bird(sceneManager.Content, 500);
-        enemy2.animationManager.SetPosition(new Vector2(650, 0));
-        AddDynamicPhysicsObject(enemy2);
-
-        Spike spike1 = new Spike(sceneManager.Content);
-        spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.SpritePosition = new Vector2(420, 900);
-        AddDynamicPhysicsObject(spike1);
-
-        Spike spike2 = new Spike(sceneManager.Content);
-        spike2.Sprite.Scale = new Vector2(4, 4);
-        spike2.Sprite.SpritePosition = new Vector2(360, 900);
-        AddDynamicPhysicsObject(spike2);
-
-        Spike spike3 = new Spike(sceneManager.Content);
-        spike3.Sprite.Scale = new Vector2(4, 4);
-        spike3.Sprite.SpritePosition = new Vector2(1620, 960);
-        AddDynamicPhysicsObject(spike3);
-
-        Spike spike4 = new Spike(sceneManager.Content);
-        spike4.Sprite.Scale = new Vector2(4, 4);
-        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
-        AddDynamicPhysicsObject(spike4);
-
-        // COINS
-        Coin kiwi1 = new Coin(sceneManager.Content);
-        kiwi1.animationManager.SetPosition(new Vector2(100, 500));
-        AddDynamicPhysicsObject(kiwi1);
-
-        Coin kiwi2 = new Coin(sceneManager.Content);
-        kiwi2.animationManager.SetPosition(new Vector2(300, 100));
-        AddDynamicPhysicsObject(kiwi2);
-
-        Coin kiwi3 = new Coin(sceneManager.Content);
-        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
-        AddDynamicPhysicsObject(kiwi3);
-    }
-
     // Make the gameboard
     private void InitBoard()
     {
@@ -190,6 +140,54 @@ public class Level1 : Level
                 }
             }
         }
+    }
+
+    private void InitEntities(SceneManager sceneManager)
+    {
+        hero = new Hero(sceneManager.Content, new KeyboardReader());
+        hero.animationManager.SetPosition(new Vector2(0, 0));
+        AddDynamicPhysicsObject(hero);
+
+        Snail enemy1 = new Snail(sceneManager.Content, 400);
+        enemy1.animationManager.SetPosition(new Vector2(1400, 500));
+        AddDynamicPhysicsObject(enemy1);
+
+        Bird enemy2 = new Bird(sceneManager.Content, 500);
+        enemy2.animationManager.SetPosition(new Vector2(650, 0));
+        AddDynamicPhysicsObject(enemy2);
+
+        Spike spike1 = new Spike(sceneManager.Content);
+        spike1.Sprite.Scale = new Vector2(4, 4);
+        spike1.Sprite.SpritePosition = new Vector2(420, 900);
+        AddDynamicPhysicsObject(spike1);
+
+        Spike spike2 = new Spike(sceneManager.Content);
+        spike2.Sprite.Scale = new Vector2(4, 4);
+        spike2.Sprite.SpritePosition = new Vector2(360, 900);
+        AddDynamicPhysicsObject(spike2);
+
+        Spike spike3 = new Spike(sceneManager.Content);
+        spike3.Sprite.Scale = new Vector2(4, 4);
+        spike3.Sprite.SpritePosition = new Vector2(1620, 960);
+        AddDynamicPhysicsObject(spike3);
+
+        Spike spike4 = new Spike(sceneManager.Content);
+        spike4.Sprite.Scale = new Vector2(4, 4);
+        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
+        AddDynamicPhysicsObject(spike4);
+
+        // COINS
+        Coin kiwi1 = new Coin(sceneManager.Content);
+        kiwi1.animationManager.SetPosition(new Vector2(100, 500));
+        AddDynamicPhysicsObject(kiwi1);
+
+        Coin kiwi2 = new Coin(sceneManager.Content);
+        kiwi2.animationManager.SetPosition(new Vector2(300, 200));
+        AddDynamicPhysicsObject(kiwi2);
+
+        Coin kiwi3 = new Coin(sceneManager.Content);
+        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
+        AddDynamicPhysicsObject(kiwi3);
     }
 
     public override void CheckEndConditions()

@@ -54,7 +54,7 @@ namespace MyGame.Terrain
                 if (collision.Other is Hero hero)
                 {
                     hero.AddScore();
-                    isRemoved = true;
+                    Remove();
                 }
             }
         }

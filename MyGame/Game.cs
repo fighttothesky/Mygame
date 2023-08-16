@@ -27,8 +27,8 @@ public class Game : Microsoft.Xna.Framework.Game
 
     protected override void LoadContent()
     {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
         sceneManager = new SceneManager(GraphicsDevice, Content, this);
+        spriteBatch = new SpriteBatch(GraphicsDevice);
         sceneManager.Start();
     }
 

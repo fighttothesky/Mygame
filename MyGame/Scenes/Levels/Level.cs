@@ -41,8 +41,8 @@ namespace MyGame.Scenes.Levels
         private List<IGameObject> Children()
         {
             var list = new List<IGameObject>();
-            list.AddRange(dynamicPhysicsObjects);
             list.AddRange(otherPhysicsObjects);
+            list.AddRange(dynamicPhysicsObjects);
             return list;
         }
 
@@ -56,6 +56,7 @@ namespace MyGame.Scenes.Levels
         public override void PostUpdate()
         {
             DeleteRemovedChildren();
+            CheckEndConditions();
         }
 
         public abstract void CheckEndConditions();
@@ -73,10 +74,10 @@ namespace MyGame.Scenes.Levels
             {
                 List<Collision> collisions = new();
 
-                foreach (IPhysicsObject other in otherPhysicsObjects)
+                foreach (IPhysicsObject child in Children())
                 {
-                    if (dynamicPhysicsObject == other) continue;
-                    if (PixelCollision.IsColliding(dynamicPhysicsObject, other, out Collision collision))
+                    if (dynamicPhysicsObject == child) continue;
+                    if (PixelCollision.IsColliding(dynamicPhysicsObject, child, out Collision collision))
                         collisions.Add(collision);
                 }
 
