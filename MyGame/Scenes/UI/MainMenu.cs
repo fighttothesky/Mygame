@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MyGame.Characters;
+using MyGame.Input;
 using MyGame.interfaces;
 using MyGame.Scenes.Levels;
 using System;
@@ -9,6 +11,7 @@ namespace MyGame.Scenes.UI;
 
 internal class MainMenu : UIScene
 {
+
     public MainMenu(SceneManager sceneManager)
       : base(sceneManager)
     {
@@ -19,9 +22,15 @@ internal class MainMenu : UIScene
 
     private void Init(Texture2D buttonTexture, SpriteFont buttonFont)
     {
+        int middleOfScreen = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
+
+        var background = new Background(sceneManager.Content, "Background_menu");
+        background.Sprite.Scale = new Vector2(4, 4);
+        AddUIComponent(background);
+
         var level1Button = new Button(buttonTexture, buttonFont)
         {
-            Position = new Vector2(300, 100),
+            Position = new Vector2(middleOfScreen - 150, 400),
             Text = "Level 1",
         };
 
@@ -29,7 +38,7 @@ internal class MainMenu : UIScene
 
         var level2Button = new Button(buttonTexture, buttonFont)
         {
-            Position = new Vector2(300, 200),
+            Position = new Vector2(middleOfScreen - 150, 500),
             Text = "Level 2",
         };
 
@@ -38,7 +47,7 @@ internal class MainMenu : UIScene
 
         Button quitGameButton = new Button(buttonTexture, buttonFont)
         {
-            Position = new Vector2(300, 300),
+            Position = new Vector2(middleOfScreen - 150, 600),
             Text = "Quit Game",
         };
 

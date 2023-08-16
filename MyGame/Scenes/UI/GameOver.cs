@@ -21,11 +21,17 @@ namespace MyGame.Scenes.UI
 
         private void Init(Texture2D buttonTexture, SpriteFont font)
         {
-            Text text = new Text("GAME OVER", font, new Vector2(300, 100), Color.Red);
+            var background = new Background(sceneManager.Content, "Background_menu");
+            background.Sprite.Scale = new Vector2(4, 4);
+            AddUIComponent(background);
+
+            int middleOfScreen = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
+
+            Text text = new Text("GAME OVER", font, new Vector2(middleOfScreen - 40, 350), Color.Red);
 
             var backToMenu = new Button(buttonTexture, font)
             {
-                Position = new Vector2(300, 200),
+                Position = new Vector2(middleOfScreen - 150, 400),
                 Text = "Back to menu",
             };
 
@@ -33,7 +39,7 @@ namespace MyGame.Scenes.UI
 
             Button quitGameButton = new Button(buttonTexture, font)
             {
-                Position = new Vector2(300, 300),
+                Position = new Vector2(middleOfScreen - 150, 500),
                 Text = "Quit Game",
             };
 

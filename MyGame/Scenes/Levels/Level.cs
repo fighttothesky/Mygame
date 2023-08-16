@@ -11,6 +11,7 @@ namespace MyGame.Scenes.Levels
     {
         private List<IDynamicPhysicsObject> dynamicPhysicsObjects = new List<IDynamicPhysicsObject>();
         private List<IPhysicsObject> otherPhysicsObjects = new List<IPhysicsObject>();
+        public List<IGameObject> backgroundObjects = new List<IGameObject>();
 
         protected Level(SceneManager sceneManager) : base(sceneManager)
         {
@@ -49,6 +50,7 @@ namespace MyGame.Scenes.Levels
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            backgroundObjects.ForEach(gameObject => gameObject.Draw(spriteBatch));
             Children().ForEach(gameObject => gameObject.Draw(spriteBatch));
             spriteBatch.End();
         }

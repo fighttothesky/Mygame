@@ -144,6 +144,10 @@ public class Level1 : Level
 
     private void InitEntities(SceneManager sceneManager)
     {
+        var background = new Background(sceneManager.Content, "Background_menu");
+        background.Sprite.Scale = new Vector2(4, 4);
+        backgroundObjects.Add(background);
+
         hero = new Hero(sceneManager.Content, new KeyboardReader());
         hero.animationManager.SetPosition(new Vector2(0, 600));
         AddDynamicPhysicsObject(hero);

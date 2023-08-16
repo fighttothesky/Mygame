@@ -9,33 +9,15 @@ namespace MyGame.Scenes.UI
     public class Button : IGameObject
     {
         private MouseState currentMouse;
-
         private SpriteFont font;
-
         private bool isHovering;
-
         private MouseState previousMouse;
-
         private Texture2D texture;
 
-
         public event EventHandler Click;
-
         public bool Clicked { get; private set; }
-
         public Color PenColour { get; set; }
-
         public Vector2 Position { get; set; }
-
-        public Rectangle Rectangle
-        {
-            get
-            {
-                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
-            }
-        }
-
-        public string Text { get; set; }
 
 
         public Button(Texture2D texture, SpriteFont font)
@@ -46,6 +28,16 @@ namespace MyGame.Scenes.UI
 
             PenColour = Color.Black;
         }
+
+        public Rectangle Rectangle
+        {
+            get
+            {
+                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
+            }
+        }
+
+        public string Text { get; set; }
 
         public void Draw(SpriteBatch spriteBatch)
         {
