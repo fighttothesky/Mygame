@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MyGame.Characters;
 using MyGame.Collisions;
+using MyGame.Input;
 using MyGame.interfaces;
 using System.Collections.Generic;
 
@@ -36,6 +37,11 @@ namespace MyGame.Scenes.Levels
         public void RemovePhysicsObject(IPhysicsObject physicsObject)
         {
             otherPhysicsObjects.Remove(physicsObject);
+        }
+
+        public IInputReader GetInputReader()
+        {
+            return KeyboardReader.Instance;
         }
 
         // Combine all items of the 2 lists

@@ -148,7 +148,7 @@ public class Level1 : Level
         background.Sprite.Scale = new Vector2(4, 4);
         backgroundObjects.Add(background);
 
-        hero = new Hero(sceneManager.Content, new KeyboardReader());
+        hero = new Hero(sceneManager.Content, GetInputReader());
         hero.animationManager.SetPosition(new Vector2(0, 600));
         AddDynamicPhysicsObject(hero);
 
@@ -162,7 +162,7 @@ public class Level1 : Level
 
         Spike spike1 = new Spike(sceneManager.Content);
         spike1.Sprite.Scale = new Vector2(4, 4);
-        spike1.Sprite.SpritePosition = new Vector2(420, 900);
+        spike1.Sprite.SpritePosition = new Vector2(425, 900);
         AddDynamicPhysicsObject(spike1);
 
         Spike spike2 = new Spike(sceneManager.Content);
@@ -177,7 +177,7 @@ public class Level1 : Level
 
         Spike spike4 = new Spike(sceneManager.Content);
         spike4.Sprite.Scale = new Vector2(4, 4);
-        spike4.Sprite.SpritePosition = new Vector2(1680, 960);
+        spike4.Sprite.SpritePosition = new Vector2(1685, 960);
         AddDynamicPhysicsObject(spike4);
 
         Spike spike5 = new Spike(sceneManager.Content);
@@ -187,7 +187,7 @@ public class Level1 : Level
 
         Spike spike6 = new Spike(sceneManager.Content);
         spike6.Sprite.Scale = new Vector2(4, 4);
-        spike6.Sprite.SpritePosition = new Vector2(660, 715);
+        spike6.Sprite.SpritePosition = new Vector2(665, 715);
         AddDynamicPhysicsObject(spike6);
 
         // COINS

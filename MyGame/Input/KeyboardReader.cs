@@ -1,11 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using MyGame.Enums;
 using MyGame.interfaces;
+using System;
 
 namespace MyGame.Input;
 
-internal class KeyboardReader : IInputReader
+class KeyboardReader : IInputReader
 {
+    public static KeyboardReader Instance = new KeyboardReader();
+
+    protected KeyboardReader()
+    {
+    }
+
     private KeyboardState state;
 
     public Direction ReadDirectionInput()

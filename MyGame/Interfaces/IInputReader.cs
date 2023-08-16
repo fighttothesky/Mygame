@@ -2,7 +2,7 @@
 
 namespace MyGame.interfaces;
 
-internal interface IInputReader
+public interface IInputReader
 {
     Direction ReadDirectionInput();
 }

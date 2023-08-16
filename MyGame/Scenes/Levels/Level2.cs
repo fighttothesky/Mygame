@@ -149,7 +149,7 @@ public class Level2 : Level
         backgroundObjects.Add(background);
 
 
-        hero = new Hero(sceneManager.Content, new KeyboardReader());
+        hero = new Hero(sceneManager.Content, GetInputReader());
         hero.animationManager.SetPosition(new Vector2(0, 800));
         AddDynamicPhysicsObject(hero);
 
@@ -167,19 +167,19 @@ public class Level2 : Level
         {
             Spike spike1 = new Spike(sceneManager.Content);
             spike1.Sprite.Scale = new Vector2(4, 4);
-            spike1.Sprite.SpritePosition = new Vector2(420 + (i * 60), 895);
+            spike1.Sprite.SpritePosition = new Vector2(420 + (i * 65), 895);
             AddDynamicPhysicsObject(spike1);
 
             Spike spike2 = new Spike(sceneManager.Content);
             spike2.Sprite.Scale = new Vector2(4, 4);
             spike2.Sprite.effects = SpriteEffects.FlipVertically;
-            spike2.Sprite.SpritePosition = new Vector2(420 + (i * 60), 600);
+            spike2.Sprite.SpritePosition = new Vector2(420 + (i * 65), 600);
             AddDynamicPhysicsObject(spike2);
 
             Spike spike3 = new Spike(sceneManager.Content);
             spike3.Sprite.Scale = new Vector2(4, 4);
             spike3.Sprite.effects = SpriteEffects.FlipVertically;
-            spike3.Sprite.SpritePosition = new Vector2(650 + (i * 60), 240);
+            spike3.Sprite.SpritePosition = new Vector2(650 + (i * 65), 240);
             AddDynamicPhysicsObject(spike3);
         }
 
