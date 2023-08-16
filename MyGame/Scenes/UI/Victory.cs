@@ -34,6 +34,9 @@ namespace MyGame.Scenes.UI
               {
                 quitGameButton,
               };
+
+            AddUIComponent(quitGameButton);
+            AddUIComponent(text);
         }
 
         private void QuitGameButton_Click(object sender, EventArgs e)

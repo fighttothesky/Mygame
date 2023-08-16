@@ -8,7 +8,7 @@ namespace MyGame.Sprites;
 public class Sprite : IGameObject
 {
 
-    protected SpriteEffects effects;
+    public SpriteEffects effects;
 
     // Location
     public Vector2 Scale { get; set; } = Vector2.One;

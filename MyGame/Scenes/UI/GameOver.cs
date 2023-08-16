@@ -8,7 +8,6 @@ namespace MyGame.Scenes.UI
 {
     internal class GameOver : UIScene
     {
-        private List<IGameObject> components;
 
         public GameOver(SceneManager sceneManager)
       : base(sceneManager)

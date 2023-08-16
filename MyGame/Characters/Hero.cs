@@ -43,7 +43,7 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
         character = new AnimationMover(animationManager);
         character.Speed = 3;
         SpriteFont font = contentManager.Load<SpriteFont>("Font");
-        scoreLabel = new Text("Points: " + Score, font, new Vector2(10, 30), Color.Black);
+        scoreLabel = new Text("Points: " + Score, font, new Vector2(10, 30), Color.White);
 
         this.inputReader = inputReader;
         forbiddenDirections = new List<Direction>();
@@ -145,7 +145,8 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
 
     public void AddScore()
     {
-        scoreLabel.Content = "Points: " + Score++;
+        Score++;
+        scoreLabel.Content = "Points: " + Score;
     }
 
     private void CreateAnimations(ContentManager contentManager)
