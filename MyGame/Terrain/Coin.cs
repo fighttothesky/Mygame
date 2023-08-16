@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Terrain
 {
-    internal class Coin : IDynamicPhysicsObject, IRemovable
+    internal class Coin : IDynamicPhysicsObject, IRemovable, Isubject
     {
         public Sprite Sprite { get; }
         public readonly AnimationManager animationManager;
@@ -18,10 +18,13 @@ namespace MyGame.Terrain
 
         private bool isRemoved = false;
 
+        private List<Iobserver> observers;
+
         public Coin(ContentManager contentManager)
         {
             CreateAnimations(contentManager);
             animationManager = new AnimationManager(idleAnimation, Vector2.One);
+            observers = new List<Iobserver>();
 
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -53,7 +56,6 @@ namespace MyGame.Terrain
             {
                 if (collision.Other is Hero hero)
                 {
-                    hero.AddScore();
                     Remove();
                 }
             }
@@ -67,6 +69,20 @@ namespace MyGame.Terrain
         public void Remove()
         {
             isRemoved = true;
+            Notify();
+        }
+
+        public void Attach(Iobserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void Notify()
+        {
+            observers.ForEach(o =>
+            {
+                o.Update(this);
+            });
         }
     }
 }

@@ -148,9 +148,25 @@ public class Level1 : Level
         background.Sprite.Scale = new Vector2(4, 4);
         backgroundObjects.Add(background);
 
+        // COINS
+        Coin kiwi1 = new Coin(sceneManager.Content);
+        kiwi1.animationManager.SetPosition(new Vector2(470, 750));
+        AddDynamicPhysicsObject(kiwi1);
+
+        Coin kiwi2 = new Coin(sceneManager.Content);
+        kiwi2.animationManager.SetPosition(new Vector2(700, 500));
+        AddDynamicPhysicsObject(kiwi2);
+
+        Coin kiwi3 = new Coin(sceneManager.Content);
+        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
+        AddDynamicPhysicsObject(kiwi3);
+
         hero = new Hero(sceneManager.Content, GetInputReader());
         hero.animationManager.SetPosition(new Vector2(0, 600));
         AddDynamicPhysicsObject(hero);
+        kiwi1.Attach(hero);
+        kiwi2.Attach(hero);
+        kiwi3.Attach(hero);
 
         Snail enemy1 = new Snail(sceneManager.Content, 400);
         enemy1.animationManager.SetPosition(new Vector2(1400, 500));
@@ -189,19 +205,6 @@ public class Level1 : Level
         spike6.Sprite.Scale = new Vector2(4, 4);
         spike6.Sprite.SpritePosition = new Vector2(665, 715);
         AddDynamicPhysicsObject(spike6);
-
-        // COINS
-        Coin kiwi1 = new Coin(sceneManager.Content);
-        kiwi1.animationManager.SetPosition(new Vector2(470, 750));
-        AddDynamicPhysicsObject(kiwi1);
-
-        Coin kiwi2 = new Coin(sceneManager.Content);
-        kiwi2.animationManager.SetPosition(new Vector2(700, 500));
-        AddDynamicPhysicsObject(kiwi2);
-
-        Coin kiwi3 = new Coin(sceneManager.Content);
-        kiwi3.animationManager.SetPosition(new Vector2(1100, 800));
-        AddDynamicPhysicsObject(kiwi3);
     }
 
     public override void CheckEndConditions()

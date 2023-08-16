@@ -8,12 +8,13 @@ using MyGame.interfaces;
 using MyGame.Scenes;
 using MyGame.Scenes.UI;
 using MyGame.Sprites;
+using MyGame.Terrain;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MyGame.Characters;
 
-internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
+internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject, Iobserver
 {
     const int MAX_SINK_HEIGHT = 5;
 
@@ -143,12 +144,6 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
         return animationManager.CurrentAnimation;
     }
 
-    public void AddScore()
-    {
-        Score++;
-        scoreLabel.Content = "Points: " + Score;
-    }
-
     private void CreateAnimations(ContentManager contentManager)
     {
         Texture2D radishIdle = contentManager.Load<Texture2D>("Radish_Idle2");
@@ -170,5 +165,14 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject
     public void Remove()
     {
         lose = true;
+    }
+
+    public void Update(Isubject subject)
+    {
+        if (subject is Coin coin)
+        {
+            Score++;
+            scoreLabel.Content = "Points: " + Score;
+        }
     }
 }
