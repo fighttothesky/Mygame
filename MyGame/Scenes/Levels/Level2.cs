@@ -144,7 +144,7 @@ public class Level2 : Level
 
     private void InitEntities(SceneManager sceneManager)
     {
-        var background = new Background(sceneManager.Content, "Background_menu");
+        var background = new Background(sceneManager.Content, "Stone_Background");
         background.Sprite.Scale = new Vector2(4, 4);
         backgroundObjects.Add(background);
 
