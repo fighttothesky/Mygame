@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MyGame.interfaces
 {
-    public interface Iobserver
+    public interface IObserver
     {
-        void Update(Isubject subject);
+        void Update(ISubject subject);
     }
 }

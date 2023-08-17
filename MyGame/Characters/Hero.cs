@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace MyGame.Characters;
 
-internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject, Iobserver
+internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject, IObserver
 {
     const int MAX_SINK_HEIGHT = 5;
 
@@ -167,7 +167,7 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject, Iobserv
         lose = true;
     }
 
-    public void Update(Isubject subject)
+    public void Update(ISubject subject)
     {
         if (subject is Coin coin)
         {

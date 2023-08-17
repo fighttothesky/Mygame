@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MyGame.Terrain
 {
-    internal class Coin : IDynamicPhysicsObject, IRemovable, Isubject
+    internal class Coin : IDynamicPhysicsObject, IRemovable, ISubject
     {
         public Sprite Sprite { get; }
         public readonly AnimationManager animationManager;
@@ -18,13 +18,13 @@ namespace MyGame.Terrain
 
         private bool isRemoved = false;
 
-        private List<Iobserver> observers;
+        private List<IObserver> observers;
 
         public Coin(ContentManager contentManager)
         {
             CreateAnimations(contentManager);
             animationManager = new AnimationManager(idleAnimation, Vector2.One);
-            observers = new List<Iobserver>();
+            observers = new List<IObserver>();
 
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -72,7 +72,7 @@ namespace MyGame.Terrain
             Notify();
         }
 
-        public void Attach(Iobserver observer)
+        public void Attach(IObserver observer)
         {
             observers.Add(observer);
         }

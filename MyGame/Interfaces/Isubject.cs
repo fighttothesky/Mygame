@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MyGame.interfaces
 {
-    public interface Isubject
+    public interface ISubject
     {
 
-        void Attach(Iobserver observer);
+        void Attach(IObserver observer);
 
         void Notify();
     }
