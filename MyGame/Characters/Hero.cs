@@ -32,7 +32,7 @@ internal class Hero : IDynamicPhysicsObject, IRemovable, IGravityObject, IObserv
     public int Score { get; private set; } = 0;
     private Text scoreLabel;
 
-    public bool Debug { get; set; } = true;
+    public bool Debug { get; set; } = false;
 
     // lose if hero touches a enemy
     private bool lose;
