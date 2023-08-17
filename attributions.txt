@@ -1,1 +1,8 @@
 https://github.com/Oyyou/MonoGame_Tutorials/tree/master/MonoGame_Tutorials/Tutorial013 -> menu tutorial
+https://pixelfrog-assets.itch.io/kings-and-pigs -> Stone Background
+https://github.com/Oyyou/MonoGame_Tutorials/tree/master/MonoGame_Tutorials/Tutorial008 -> Score tutorial
+https://pixelfrog-assets.itch.io/pixel-adventure-2 -> Sprites
+https://pixelfrog-assets.itch.io/pixel-adventure-1 -> Sprites
+https://penzilla.itch.io/vector-icon-pack -> button sprites
+https://www.gamedeveloper.com/programming/the-actual-singleton-pattern -> Singleton Pattern extra example
+https://en.wikipedia.org/wiki/Observer_pattern -> observer pattern extra example
