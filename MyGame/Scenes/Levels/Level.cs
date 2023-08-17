@@ -24,19 +24,21 @@ namespace MyGame.Scenes.Levels
             dynamicPhysicsObjects.Add(dynamicPhysicsObject);
         }
 
-        public void RemoveDynamicPhysicsObject(IDynamicPhysicsObject dynamicPhysicsObject)
-        {
-            dynamicPhysicsObjects.Remove(dynamicPhysicsObject);
-        }
-
         public void AddPhysicsObject(IPhysicsObject physicsObject)
         {
             otherPhysicsObjects.Add(physicsObject);
         }
 
-        public void RemovePhysicsObject(IPhysicsObject physicsObject)
+        public void RemoveChild(IPhysicsObject gameObject)
         {
-            otherPhysicsObjects.Remove(physicsObject);
+            if (gameObject is IDynamicPhysicsObject dynamicPhysicsObject)
+            {
+                dynamicPhysicsObjects.Remove(dynamicPhysicsObject);
+            }
+            else if (gameObject is IPhysicsObject physicsObject)
+            {
+                otherPhysicsObjects.Remove(physicsObject);
+            }
         }
 
         public IInputReader GetInputReader()
@@ -103,14 +105,7 @@ namespace MyGame.Scenes.Levels
             {
                 if (child is IRemovable removable && removable.IsRemoved() && removable is not Hero)
                 {
-                    if (child is IDynamicPhysicsObject dynamic)
-                    {
-                        RemoveDynamicPhysicsObject(dynamic);
-                    }
-                    else
-                    {
-                        RemovePhysicsObject(child);
-                    }
+                    RemoveChild(child);
                 }
             }
         }

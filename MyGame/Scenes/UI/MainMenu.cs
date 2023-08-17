@@ -28,7 +28,7 @@ internal class MainMenu : UIScene
         AddUIComponent(background);
 
         int middleOfScreen = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
-        Text text = new Text("THE RADISHMAN", titleFont, new Vector2(middleOfScreen, 250), Color.White);
+        Text text = new Text("THE FLYING RADISHMAN", titleFont, new Vector2(middleOfScreen, 250), Color.White);
         text.IsCentered = true;
 
         var level1Button = new Button(buttonTexture, buttonFont, "Level 1")
