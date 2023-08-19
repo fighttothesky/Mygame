@@ -29,7 +29,7 @@ namespace MyGame.Scenes.Levels
             otherPhysicsObjects.Add(physicsObject);
         }
 
-        public void RemoveChild(IPhysicsObject gameObject)
+        public void RemoveChild(IGameObject gameObject)
         {
             if (gameObject is IDynamicPhysicsObject dynamicPhysicsObject)
             {
@@ -101,7 +101,7 @@ namespace MyGame.Scenes.Levels
 
         public void DeleteRemovedChildren()
         {
-            foreach (IPhysicsObject child in Children())
+            foreach (var child in Children())
             {
                 if (child is IRemovable removable && removable.IsRemoved() && removable is not Hero)
                 {
